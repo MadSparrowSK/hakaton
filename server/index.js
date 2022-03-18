@@ -1,6 +1,6 @@
-const express = require('express');
-const cors = require('cors');
-
+const express = require('express')
+const cors = require('cors')
+const connection = require('./models/connection')
 const loginRouter = require('./Router/login-router')
 const regRouter = require('./Router/reg-router')
 const authRouter = require('./Router/auth-router')
