@@ -33,14 +33,3 @@ const start = async () => {
 }
 
 start();
-
-
-const test = async () => {
-    await User.create({
-        email: 'test@mail.ru',
-        password: 'ssfksdfsd',
-        email_confirm: false
-    })
-}
-
-test()
