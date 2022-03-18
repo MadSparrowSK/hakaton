@@ -1,25 +1,21 @@
-const Sequelize = require('sequelize')
+const mongo = require('mongodb').MongoClient
 
-module.exports = class ConnectionDb
-{
-    connection
-
-    constructor(dbName, login, password, host='localhost', dialect='mysql') {
-        this.connection  = new Sequelize(
-            dbName,
-            login,
-            password,
-            {
-                host: host,
-                dialect: dialect
+try {
+    mongo.connect(
+        'mongodb+srv://user:1@cluster0.pmggm.mongodb.net/HakatonDB?retryWrites=true&w=majority',
+        (err, client) => {
+            if (err) {
+                console.log('Connection error: ', err)
+                throw err
             }
-        )
-    }
 
-    createConnection()
-    {
-        this.connection.authenticate()
-                .then(() => console.log('Connected.'))
-                .catch((err) => console.error('Connection error: ', err))
-    }
+            console.log('Connected')
+
+            client.close()
+        }
+    )
+} catch (e) {
+    console.log(e)
 }
+
+module.exports = mongo
