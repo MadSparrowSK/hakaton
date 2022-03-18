@@ -1,8 +1,12 @@
+const DBController = require('../DatabaseAPIInterractive/DBController')
+
 class RouterController {
     loginPostRequest(req,res) {
+
         res.status(200).json('ok')
     }
-    regPostRequest(req,res) {
+    async regPostRequest(req,res) {
+        await DBController.createUser(req.body)
         res.status(200).json('ok')
     }
     authGetRequest(req,res) {

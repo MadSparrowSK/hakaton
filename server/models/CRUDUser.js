@@ -1,6 +1,6 @@
 const model = require('User')
 
-class CRUDUser
+module.exports = class CRUDUser
 {
     /**
      *

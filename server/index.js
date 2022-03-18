@@ -6,8 +6,6 @@ const regRouter = require('./Router/reg-router')
 const authRouter = require('./Router/auth-router')
 const errorRouter = require('./Router/error-router')
 
-const User = require('./models/User');
-
 const PORT = 5000;
 
 const app = express();
