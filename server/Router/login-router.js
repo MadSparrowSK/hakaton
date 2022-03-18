@@ -1,10 +1,9 @@
 const {Router} = require('express')
+const RouterController = require('./RouterController')
 
 const loginRouter = new Router();
 
-loginRouter.post('/login', (req,res) => {
-    res.status(200).json({message:'test' });
-})
+loginRouter.post('/login', RouterController.loginPostRequest)
 
 
 module.exports = loginRouter;

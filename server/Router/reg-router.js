@@ -1,9 +1,8 @@
 const {Router} = require('express')
+const RouterController = require('./RouterController')
 
 const regRouter = new Router()
 
-regRouter.post('/reg', (req, res) => {
-    res.status(200).json({message: 'reg'})
-})
+regRouter.post('/reg', RouterController.regPostRequest)
 
 module.exports = regRouter;
