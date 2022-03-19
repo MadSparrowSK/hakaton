@@ -99,25 +99,24 @@ module.exports = class LoginForm
         return false
     }
 
-
     async loginRecord(params)
     {
         const {email, password} = params
         this.email = email
         this.password = password
         if (await this._validate(true)){
-            let user = await crudUser.findUser({email: email, password: this.password})
+            const user = await crudUser.findUser({email: {$eq: email}, password: {$eq: this.password}})
             if (user) {
                 if (user.dual_auth){
-                    const authTypeUser = crudTypeAuthUser.findOne({s_user: {$eq: user._id.toString()}})
-                    const authType = crudTypeAuth.findOne({_id: {$eq: authTypeUser.s_type}})
+                    const authTypeUser = await crudTypeAuthUser.findOne({s_user: {$eq: user._id.toString()}})
+                    const authType = await crudTypeAuth.findOne({_id: {$eq: authTypeUser.s_type}})
 
                     switch (authType.code){
                         case 'email':
                             await this._sendMail(user.email)
                             this._error = 'На почту выслан код подтверждения'
                             this._errorCode = '200'
-                            break;
+                            return true;
                         default:
                             this._error = 'Ошибка при поиске двухфакторной аутентификации'
                             this._errorCode = '404'
@@ -131,7 +130,6 @@ module.exports = class LoginForm
             }
             this._error = 'Неверно введен логин или пароль'
         }
-
 
         this._errorCode = '404'
         return false
