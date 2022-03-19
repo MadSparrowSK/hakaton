@@ -7,7 +7,7 @@ module.exports = class CRUDActivate
      * @param params object
      * @returns {Promise<boolean>}
      */
-    static async createOneUser(params) {
+    static async createOneActivation(params) {
         return await model.create(params)
     }
 
@@ -16,7 +16,7 @@ module.exports = class CRUDActivate
      * @param params objects[]
      * @returns {Promise<boolean>}
      */
-    static async createManyUser(params){
+    static async createManyActivation(params){
         await model.insertMany(params, (err) => {
             if (err) {
                 return false
@@ -30,7 +30,7 @@ module.exports = class CRUDActivate
      * @param id
      * @returns {Promise<Query<any, any, {}, any>>}
      */
-    static async findUserById(id)
+    static async findActivationById(id)
     {
         return model.findById(id, (err) => {
             if (err) {
@@ -44,7 +44,7 @@ module.exports = class CRUDActivate
      * @param filter object
      * @returns {Promise<Query<any, any, {}, any>>}
      */
-    static async findUser(filter)
+    static async findActivation(filter)
     {
         return model.findOne(filter, (err) => {
             if (err) {
@@ -58,7 +58,7 @@ module.exports = class CRUDActivate
      * @param $condition
      * @returns {Promise<void>}
      */
-    static async deleteUser($condition)
+    static async deleteActivation($condition)
     {
         await model.deleteOne($condition).then(function(){
             return true;
@@ -67,7 +67,7 @@ module.exports = class CRUDActivate
         });
     }
 
-    static async deleteManyUsers($condition)
+    static async deleteManyActivations($condition)
     {
         await model.deleteMany($condition).then(function(){
             return true

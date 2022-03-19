@@ -8,6 +8,7 @@ module.exports = class LoginForm
     _id
     _verification
     _errorCode = ''
+    _duplicateEmail = false
     email
     password
     date_create = Date.now()
@@ -34,7 +35,7 @@ module.exports = class LoginForm
             let tempUser;
             if (! (tempUser = await crudTempUser.createOneUser(conditionUsers))){
                 this._errorCode = 500
-                this._error = 'Ошибка при создании записи user'
+                this._error = 'Ошибка при создании записи'
                 return false
             }
 
@@ -49,9 +50,37 @@ module.exports = class LoginForm
             }
 
             let activate = null
-            if (!(activate = await crudActivation.createOneUser(paramsActivate))) {
+            if (!(activate = await crudActivation.createOneActivation(paramsActivate))) {
                 this._errorCode = 500
-                this._error = 'Ошибка при создании записи activation'
+                this._error = 'Ошибка при создании записи'
+                return false
+            }
+
+            this._verification = activate.verification
+
+            return true
+        }
+        if (this._duplicateEmail) {
+            if (!crudActivation.deleteActivation({email: {$eq: this.email}})){
+                this._errorCode = 500
+                this._error = 'Ошибка при удалении записи'
+                return false
+            }
+
+            const tempUser = crudTempUser.findUser({email: {$eq: this.email}});
+            this._id = tempUser._id.toString()
+            const paramsActivate = {
+                email: this.email,
+                verification: md5(Date.now()),
+                s_user_temp: tempUser._id.toString(),
+                date_create: Date.now(),
+                data_accept: null
+            }
+
+            let activate = null
+            if (!(activate = await crudActivation.createOneActivation(paramsActivate))) {
+                this._errorCode = 500
+                this._error = 'Ошибка при создании записи'
                 return false
             }
 
@@ -123,7 +152,8 @@ module.exports = class LoginForm
 
         if (await crudTempUser.findUser({email: {$eq: this.email}})) {
             this._errorCode = 400
-            this._error = 'Данный email уже используется'
+            this._error = 'На данный email было выслано повторно письмо'
+            this._duplicateEmail = true
             return false;
         }
 
