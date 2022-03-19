@@ -1,5 +1,7 @@
 const crudActivation = require('./CRUDOperations/CRUDActivate')
 const crudUser = require('./CRUDOperations/CRUDUser')
+const crudTypeAuth = require('./CRUDOperations/CRUDTypeAuth')
+const crudTypeAuthUser = require('./CRUDOperations/CRUDTypeAuthUser')
 const crudTempUser = require('./CRUDOperations/CRUDTempUser')
 
 module.exports = class OperationWithModels
@@ -7,6 +9,11 @@ module.exports = class OperationWithModels
     static _error=''
     static _codeError=''
 
+    /**
+     * 
+     * @param params
+     * @returns {Promise<boolean>}
+     */
     static async confirmAccount(params)
     {
         const {id, hash} = params
@@ -48,6 +55,76 @@ module.exports = class OperationWithModels
         this._codeError = '500'
         return false
     }
+
+    /**
+     *
+     * @param params
+     * @returns {Promise<{dualAuth: boolean, code: null}|null|{dualAuth: boolean, code: *}>}
+     */
+    static async modalAuth(params)
+    {
+        const { email } = params
+        const user = crudUser.findUser({email: {$eq: email}})
+
+        if (user) {
+            if (user.dual_auth) {
+                const typeAuthUser = crudTypeAuthUser.findOne({s_user: user._id.toString()})
+                const typeAuth = crudTypeAuth.findById(typeAuthUser._id.toString())
+                this._error = 'Двухфакторная защита уже подключена';
+                this._codeError = '200'
+                return {
+                    dualAuth: true,
+                    code: typeAuth.code
+                }
+            } else {
+                this._error = 'Не подключена двухфакторная защита';
+                this._codeError = '200'
+                return {
+                    dualAuth: false,
+                    code: null
+                }
+            }
+        }
+
+        this._error = 'Ошибка аккаунт не найден';
+        this._codeError = '404'
+        return null
+
+    }
+
+    /**
+     *
+     * @param params
+     * @returns {Promise<boolean>}
+     */
+    static async dualAuth(params)
+    {
+        const { email, code, status } = params
+        const user = crudUser.findUser({email: {$eq: email}})
+        if (user) {
+            if (!user.dual_auth) {
+                const typeAuth = await crudTypeAuth.findOne({code: {$eq: code}})
+                if (!typeAuth){
+                    this._error = 'Ошибка данный тип аунтификации не найден';
+                    this._codeError = '404'
+                    return false
+                }
+            }
+
+            await crudTypeAuthUser.delete({s_user: user._id.toString()})
+            if (status) {
+                await crudTypeAuthUser.createOne({s_user: user._id.toString(), s_type: typeAuth._id.toString()})
+            }
+            this._error = 'Данные успешно обновлены';
+            this._codeError = '200'
+            return true
+        }
+
+        this._error = 'Ошибка аккаунт не найден';
+        this._codeError = '404'
+        return false
+    }
+
 
     /**
      * Возвращает текст ответа
