@@ -105,7 +105,7 @@ module.exports = class LoginForm
         this.email = email
         this.password = password
         if (await this._validate(true)){
-            let user = await crudUser.findUser({email: email, password: password})
+            let user = await crudUser.findUser({email: email, password: this.password})
             if (user) {
                 if (user.dual_auth){
                     const authTypeUser = crudTypeAuthUser.findOne({s_user: {$eq: user._id.toString()}})
@@ -128,9 +128,10 @@ module.exports = class LoginForm
                     return true
                 }
             }
+            this._error = 'Неверно введен логин или пароль'
         }
 
-        this._error = 'Неверно введен логин или пароль'
+
         this._errorCode = '404'
         return false
 
@@ -200,7 +201,7 @@ module.exports = class LoginForm
             return false;
         }
 
-        if (login) {
+        if (!login) {
             if (await crudTempUser.findUser({email: {$eq: this.email}})) {
                 this._errorCode = 400
                 this._error = 'На данный email было выслано повторно письмо'
