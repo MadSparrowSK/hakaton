@@ -5,7 +5,8 @@ const dynamicKeyRouter = new Router()
 
 const map = new Map();
 
-dynamicKeyRouter.post('/key', (req,res) => {
+dynamicKeyRouter.post('/key',  async (req,res) => {
+    const { email, code } = req.body;
     res.status(200).json('ok')
 })
 
