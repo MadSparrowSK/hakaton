@@ -104,7 +104,7 @@ module.exports = class LoginForm
         const {email, password} = params
         this.email = email
         this.password = password
-        if (await this._validate()){
+        if (await this._validate(true)){
             let user = await crudUser.findUser({email: email, password: password})
             if (user) {
                 if (user.dual_auth){
@@ -179,11 +179,17 @@ module.exports = class LoginForm
      * @returns {boolean}
      * @private
      */
-    async _validate()
+    async _validate(login=false)
     {
         if (!this.email) {
             this._errorCode = 400
             this._error = 'поле email не может быть пустым'
+            return false;
+        }
+
+        if (!this.password) {
+            this._errorCode = 400
+            this._error = 'поле password не может быть пустым'
             return false;
         }
 
@@ -194,11 +200,13 @@ module.exports = class LoginForm
             return false;
         }
 
-        if (await crudTempUser.findUser({email: {$eq: this.email}})) {
-            this._errorCode = 400
-            this._error = 'На данный email было выслано повторно письмо'
-            this._duplicateEmail = true
-            return false;
+        if (login) {
+            if (await crudTempUser.findUser({email: {$eq: this.email}})) {
+                this._errorCode = 400
+                this._error = 'На данный email было выслано повторно письмо'
+                this._duplicateEmail = true
+                return false;
+            }
         }
 
         this.password = md5(this.password)
