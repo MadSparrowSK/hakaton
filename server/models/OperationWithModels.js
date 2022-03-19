@@ -128,6 +128,19 @@ module.exports = class OperationWithModels
         return false
     }
 
+    static async checkDynamicCode(params)
+    {
+        const {email, code} = params
+        const user = await crudUser.findUser({email: {$eq: email}})
+        if (user) {
+            const userCode = await crudUserCode.findOne({s_user: {$eq: user._id.toString()}, dynamic: true})
+            if (userCode.code === code) {
+                return true
+            }
+        }
+        return false
+    }
+
     static async reWriteCodeDynamic(params)
     {
         const {id, code} = params
@@ -137,8 +150,8 @@ module.exports = class OperationWithModels
             if (userCode) {
                 await crudUserCode.updateOne({s_user: {$eq: user._id.toString()}}, {code: code})
                 return true
-            }else {
-                await crudUserCode.createOne({s_user: user._id.toString(), code: code})
+            } else {
+                await crudUserCode.createOne({s_user: user._id.toString(), code: code, dynamic: true})
             }
         }
         return false
