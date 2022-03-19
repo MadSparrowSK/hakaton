@@ -9,20 +9,25 @@ class RouterController {
         const { email, password } = req.body;
         const isLogIn = await LogForm.loginRecord({ email, password });
         if(!isLogIn) {
-            res.status(LogForm.getErrorCode())
-                .json({ message:LogForm.getError() });
+            res.status(LogForm.getResponseCode())
+                .json({ message:LogForm.getResponse() });
         } else {
-            res.status(LogForm.getErrorCode()).json({
-                message: LogForm.getError()
+            res.status(LogForm.getResponseCode()).json({
+                message: LogForm.getResponse()
             })
         }
     }
     async loginVerifyCode(req, res) {
-        const { email, verification_code } = req.body;
-        const obj = {};
-        res.status(200).json({
-            message: 'loginVerifyCode'
-        })
+        const { email, code } = req.body;
+        const isVerify = await LogForm.checkCode({ code, email });
+        if(isVerify) {
+            res.status(LogForm.getResponseCode()).redirect('https://www.youtube.com/watch?v=dQw4w9WgXcQ');
+        } else {
+            res.status(LogForm.getResponseCode()).json({
+                message: LogForm.getResponse()
+            })
+        }
+
     }
     async manyFactorCheck(req,res) {
         const { email } = req.query;
