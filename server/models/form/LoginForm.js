@@ -1,4 +1,8 @@
 const crudTempUser = require('../CRUDOperations/CRUDTempUser')
+const crudTypeAuth= require('../CRUDOperations/CRUDTypeAuth')
+const MailController = require('../../Mail/MailController')
+const crudTypeAuthUser = require('../CRUDOperations/CRUDTypeAuthUser')
+const crudUser = require('../CRUDOperations/CRUDUser')
 const crudActivation = require('../CRUDOperations/CRUDActivate')
 const md5 = require('md5')
 
@@ -68,28 +72,68 @@ module.exports = class LoginForm
             }
 
             const tempUser = await crudTempUser.findUser({email: {$eq: this.email}});
-            this._id = tempUser._id.toString()
-            const paramsActivate = {
-                email: this.email,
-                verification: md5(Date.now()),
-                s_user_temp: tempUser._id.toString(),
-                date_create: Date.now(),
-                data_accept: null
+            if (tempUser){
+                this._id = tempUser._id.toString()
+                const paramsActivate = {
+                    email: this.email,
+                    verification: md5(Date.now()),
+                    s_user_temp: tempUser._id.toString(),
+                    date_create: Date.now(),
+                    data_accept: null
+                }
+
+                let activate = null
+                if (!(activate = await crudActivation.createOneActivation(paramsActivate))) {
+                    this._errorCode = 500
+                    this._error = 'Ошибка при создании записи'
+                    return false
+                }
+
+                this._verification = activate.verification
+
+                return true
             }
-
-            let activate = null
-            if (!(activate = await crudActivation.createOneActivation(paramsActivate))) {
-                this._errorCode = 500
-                this._error = 'Ошибка при создании записи'
-                return false
-            }
-
-            this._verification = activate.verification
-
-            return true
         }
 
         return false
+    }
+
+
+    async loginRecord(params)
+    {
+        const {email, password} = params
+        this.email = email
+        this.password = password
+        if (await this._validate()){
+            let user = await crudUser.findUser({email: email, password: password})
+            if (user) {
+                if (user.dual_auth){
+                    const authTypeUser = crudTypeAuthUser.findOne({s_user: {$eq: user._id.toString()}})
+                    const authType = crudTypeAuth.findOne({_id: {$eq: authTypeUser.s_type}})
+
+                    switch (authType.code){
+                        case 'email':
+                            await this._sendMail(user.email)
+                            this._error = 'На почту выслан код подтверждения'
+                            this._errorCode = '200'
+                            break;
+                        default:
+                            this._error = 'Ошибка при поиске двухфакторной аутентификации'
+                            this._errorCode = '404'
+                            return false
+                    }
+                } else {
+                    this._errorCode = '200'
+                    this._error = 'Вы успешно авторизовались'
+                    return true
+                }
+            }
+        }
+
+        this._error = 'Неверно введен логин или пароль'
+        this._errorCode = '404'
+        return false
+
     }
 
     /**
@@ -160,5 +204,11 @@ module.exports = class LoginForm
         this.password = md5(this.password)
 
         return true
+    }
+
+
+    async _sendMail(email)
+    {
+        await MailController.sendAuthCode({email: email})
     }
 }

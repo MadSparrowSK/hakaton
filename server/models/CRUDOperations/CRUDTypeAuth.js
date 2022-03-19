@@ -1,13 +1,13 @@
-const model = require('../User')
+const model = require('../TypeAuth')
 
-module.exports = class CRUDUser
+module.exports = class CRUDTypeAuth
 {
     /**
      *
      * @param params object
-     * @returns {Promise<HydratedDocument<any, {}, {}>[]>}
+     * @returns {Promise<boolean>}
      */
-    static async createOneUser(params) {
+    static async createOne(params) {
         return await model.create(params)
     }
 
@@ -16,7 +16,7 @@ module.exports = class CRUDUser
      * @param params objects[]
      * @returns {Promise<boolean>}
      */
-    static async createManyUser(params){
+    static async createMany(params){
         await model.insertMany(params, (err) => {
             if (err) {
                 return false
@@ -30,13 +30,27 @@ module.exports = class CRUDUser
      * @param filter object
      * @returns {Promise<Query<any, any, {}, any>>}
      */
-    static async findUser(filter)
+    static async findOne(filter)
     {
         return model.findOne(filter, (err) => {
             if (err) {
                 return null
             }
-        }).clone()
+        }).clone();
+    }
+
+    /**
+     *
+     * @param filter object
+     * @returns {Promise<Query<any, any, {}, any>>}
+     */
+    static async findMany(filter)
+    {
+        return model.find(filter, (err) => {
+            if (err) {
+                return null
+            }
+        }).clone();
     }
 
     /**
@@ -44,13 +58,13 @@ module.exports = class CRUDUser
      * @param id
      * @returns {Promise<Query<any, any, {}, any>>}
      */
-    static async findUserById(id)
+    static async findById(id)
     {
         return model.findById(id, (err) => {
             if (err) {
                 return null
             }
-        }).clone()
+        }).clone();
     }
 
     /**
@@ -58,13 +72,13 @@ module.exports = class CRUDUser
      * @param $condition
      * @returns {Promise<void>}
      */
-    static async deleteUser($condition)
+    static async delete($condition)
     {
         await model.deleteOne($condition)
         return true;
     }
 
-    static async deleteManyUsers($condition)
+    static async deleteMany($condition)
     {
         await model.deleteMany($condition)
         return true;

@@ -74,19 +74,13 @@ module.exports = class CRUDTempUser
      */
     static async deleteUser($condition)
     {
-        await model.deleteOne($condition).then(function(){
-            return true;
-        }).catch((error) => {
-            return false;
-        });
+        await model.deleteOne($condition)
+        return true;
     }
 
     static async deleteManyUsers($condition)
     {
-        await model.deleteMany($condition).then(function(){
-            return true
-        }).catch((e) => {
-            return false
-        });
+        await model.deleteMany($condition)
+        return true;
     }
 }
