@@ -17,6 +17,13 @@ class RouterController {
             })
         }
     }
+    async loginVerifyCode(req, res) {
+        const { email, verification_code } = req.body;
+        const obj = {};
+        res.status(200).json({
+            message: 'loginVerifyCode'
+        })
+    }
     async regPostRequest(req,res) {
         const userCheck = await LogForm.registerRecord(req.body);
         if(!userCheck) {
