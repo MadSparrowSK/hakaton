@@ -13,7 +13,7 @@ module.exports = class OperationWithModels
         let activation = await crudActivation.findActivation({s_user_temp: id, verification: hash})
         if (activation) {
 
-            const date1 = new activation.data_create;
+            const date1 = activation.data_create;
             const date2 = new Date.now();
             const days = Math.abs(date2.getTime() - date1) / (1000 * 3600 * 24);
             if (days>=1) {
