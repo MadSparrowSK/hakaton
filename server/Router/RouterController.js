@@ -26,7 +26,7 @@ class RouterController {
                 hash
             });
             res.status(200).json({
-                message: 'registration success'
+                message: LogForm.getError()
             })
         }
     }

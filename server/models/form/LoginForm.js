@@ -61,13 +61,13 @@ module.exports = class LoginForm
             return true
         }
         if (this._duplicateEmail) {
-            if (!crudActivation.deleteActivation({email: {$eq: this.email}})){
+            if (! await crudActivation.deleteActivation({email: {$eq: this.email}})){
                 this._errorCode = 500
                 this._error = 'Ошибка при удалении записи'
                 return false
             }
 
-            const tempUser = crudTempUser.findUser({email: {$eq: this.email}});
+            const tempUser = await crudTempUser.findUser({email: {$eq: this.email}});
             this._id = tempUser._id.toString()
             const paramsActivate = {
                 email: this.email,
