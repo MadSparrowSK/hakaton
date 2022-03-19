@@ -140,7 +140,7 @@ module.exports = class LoginForm
     {
         const { email, code } = params
 
-        const user = crudUser.findUser({email: {$eq: email}})
+        const user = await crudUser.findUser({email: {$eq: email}})
         if (user) {
             const userCode = await crudUserCode.findOne({s_user: user._id.toString()})
             if (userCode.code === code) {
