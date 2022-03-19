@@ -5,14 +5,14 @@ MailService.sendCode = MailService.sendCode.bind(MailService);
 
 class MailController {
     async sendRegLink(user) {
-        const { mail, _id, hash } = user;
+        const { email, _id, hash } = user;
         const link = `http://localhost:5000/auth?id=${_id}&hash=${hash}`;
-        await MailService.sendLink(mail, link);
+        await MailService.sendLink(email, link);
     }
     async sendAuthCode(user) {
-        const { mail } = user;
+        const { email } = user;
         const code = Math.floor(Math.random() * 1000);
-        await MailService.sendCode(mail, code.toString())
+        await MailService.sendCode(email, code.toString())
         return code
     }
 }

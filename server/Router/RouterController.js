@@ -13,22 +13,22 @@ class RouterController {
     async regPostRequest(req,res) {
         const userCheck = await LogForm.registerRecord(req.body);
         if(!userCheck) {
-            res.status(500).json({
+            res.status(LogForm.getErrorCode()).json({
                 message: LogForm.getError()
             })
+        } else {
+            const {email} = req.body;
+            console.log(email)
+            const hash = LogForm.getVerification()
+            await MailController.sendRegLink({
+                email,
+                _id: LogForm.getId(),
+                hash
+            });
+            res.status(200).json({
+                message: 'registration success'
+            })
         }
-
-
-        const { mail } = req.body;
-        const hash = LogForm.getVerification()
-        await MailController.sendRegLink({
-            mail,
-            _id: '2343534534',
-            hash
-        });
-        res.status(200).json({
-            message: 'registration success'
-        })
     }
     authGetRequest(req,res) {
         res.status(200).json('ok')
