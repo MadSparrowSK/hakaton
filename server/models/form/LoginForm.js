@@ -73,6 +73,16 @@ module.exports = class LoginForm
     }
 
     /**
+     * возвращает код ошибки
+     *
+     * @returns {string}
+     */
+    getErrorCode()
+    {
+        return this._errorCode
+    }
+
+    /**
      * Возвращает код верификуации
      * @returns {*}
      */
@@ -81,6 +91,10 @@ module.exports = class LoginForm
         return this._verification;
     }
 
+    /**
+     * возвращает код созданной модели временного пользователя
+     * @returns {*}
+     */
     getId()
     {
         return this._id
