@@ -16,8 +16,8 @@ class MailService {
         await this.transporter.sendMail({
             from: "kapitnov00@gmail.com",
             to: mail,
-            subject: 'Test Send Mail in Node.js',
-            html: '<a href="' + link + '">Link</a>'
+            subject: 'DDos-Guard, verify your account to get access to our products',
+            html: '<a href="' + link + '">verification link</a>'
         })
     }
 
@@ -25,7 +25,7 @@ class MailService {
         await this.transporter.sendMail({
             from: "kapitnov00@gmail.com",
             to: mail,
-            subject: 'Test Send Mail in Node.js',
+            subject: 'DDoS-Guard, verify code',
             text: code
         })
     }
