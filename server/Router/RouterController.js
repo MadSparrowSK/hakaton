@@ -7,13 +7,14 @@ const LogForm = new LoginForm();
 class RouterController {
     async loginPostRequest(req,res) {
         const { email, password } = req.body;
-        const isLogIn = await LogForm.loginRecord({ email, password });
-        if(!isLogIn) {
+        const LogIn = await LogForm.loginRecord({ email, password });
+        if(!LogIn) {
             res.status(LogForm.getResponseCode())
                 .json({ message:LogForm.getResponse() });
         } else {
             res.status(LogForm.getResponseCode()).json({
-                message: LogForm.getResponse()
+                message: LogForm.getResponse(),
+                data: LogIn
             })
         }
     }
