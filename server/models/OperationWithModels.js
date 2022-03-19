@@ -1,5 +1,6 @@
 const crudActivation = require('./CRUDOperations/CRUDActivate')
 const crudUser = require('./CRUDOperations/CRUDUser')
+const crudUserCode = require('./CRUDOperations/CRUDUserCode')
 const crudTypeAuth = require('./CRUDOperations/CRUDTypeAuth')
 const crudTypeAuthUser = require('./CRUDOperations/CRUDTypeAuthUser')
 const crudTempUser = require('./CRUDOperations/CRUDTempUser')
@@ -127,6 +128,19 @@ module.exports = class OperationWithModels
         return false
     }
 
+    static async reWriteCodeDynamic(params)
+    {
+        const {id, code} = params
+        const user = await crudUser.findUser({email: {$eq: email}})
+        if (user){
+            const userCode = await crudUserCode.findOne({s_user: {$eq: id}})
+            if (userCode) {
+                await crudUserCode.updateOne({s_user: {$eq: user._id.toString()}}, {code: code})
+                return true
+            }
+        }
+        return false
+    }
 
     /**
      * Возвращает текст ответа
