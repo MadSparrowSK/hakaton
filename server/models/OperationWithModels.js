@@ -115,6 +115,8 @@ module.exports = class OperationWithModels
             if (status) {
                 await crudTypeAuthUser.createOne({s_user: user._id.toString(), s_type: typeAuth._id.toString()})
             }
+
+            await crudUser.updateOne({email: {$eq: email}}, {dual_auth: Boolean(code)})
             this._error = 'Данные успешно обновлены';
             this._codeError = '200'
             return true

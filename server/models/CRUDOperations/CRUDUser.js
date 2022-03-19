@@ -69,4 +69,10 @@ module.exports = class CRUDUser
         await model.deleteMany($condition)
         return true;
     }
+
+    static async updateOne(filter, condition)
+    {
+        await model.updateOne(filter, condition).clone();
+    }
+
 }
