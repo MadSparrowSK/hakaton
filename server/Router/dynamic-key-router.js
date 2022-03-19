@@ -5,6 +5,10 @@ const dynamicKeyRouter = new Router()
 
 const map = new Map();
 
+dynamicKeyRouter.post('/key', (req,res) => {
+    res.status(200).json('ok')
+})
+
 dynamicKeyRouter.get('/key/:id', async (req,res) => {
     const {id} = req.params;
     if(!map.has(id)) {
@@ -26,7 +30,6 @@ dynamicKeyRouter.get('/key/:id', async (req,res) => {
         map.get(id)['lastDate'] = currentDate;
         map.get(id)['key'] = await randomstring.generate(4);
     }
-    console.log(`${map.has(id) ? id : 'pizdec'}:${map.get(id)['key']}`)
     res.write(`data: ${map.get(id)['key']}\n\n`);
     res.end();
 })

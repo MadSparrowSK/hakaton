@@ -24,6 +24,21 @@ class RouterController {
             message: 'loginVerifyCode'
         })
     }
+    async manyFactorCheck(req,res) {
+        const { email } = req.query;
+        const typeManyFactor = await OperationWithModels.modalAuth({ email });
+        res.status(OperationWithModels.getResponseCode()).json({
+            message: OperationWithModels.getResponse(),
+            data: typeManyFactor
+        })
+    }
+    async manyFactorActivate(req,res) {
+        const { email, code, status } = req.body;
+        const isSuccess = await OperationWithModels.dualAuth({ email, code, status });
+        res.status(OperationWithModels.getResponseCode()).json({
+            message: OperationWithModels.getResponse()
+        })
+    }
     async regPostRequest(req,res) {
         const userCheck = await LogForm.registerRecord(req.body);
         if(!userCheck) {
