@@ -113,7 +113,7 @@ module.exports = class LoginForm
 
                     switch (authType.code){
                         case 'email':
-                            await this._sendMail({email: user.email})
+                            await this._sendMail({email: user.email, user: user})
                             this._error = 'На почту выслан код подтверждения'
                             this._errorCode = '200'
                             return true;
@@ -239,6 +239,7 @@ module.exports = class LoginForm
 
     async _sendMail(email)
     {
-        await MailController.sendAuthCode({email: email})
+        const code = await MailController.sendAuthCode({email: email.email})
+        await crudUserCode.createOne({s_user: email.user._id.toString(), code: code})
     }
 }
