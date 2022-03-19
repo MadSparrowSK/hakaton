@@ -14,7 +14,7 @@ module.exports = class OperationWithModels
         if (activation) {
 
             const date1 = activation.data_create;
-            const date2 = new Date.now();
+            const date2 = Date.now();
             const days = Math.abs(date2.getTime() - date1) / (1000 * 3600 * 24);
             if (days>=1) {
                 this._error = 'Данная ссылка устарела'
