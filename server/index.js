@@ -18,8 +18,6 @@ app.use(regRouter);
 app.use(authRouter);
 app.use(errorRouter);
 
-
-
 const start = async () => {
     try {
         await mongoose.connect('mongodb+srv://user:1@cluster0.pmggm.mongodb.net/HakatonDB?retryWrites=true&w=majority');

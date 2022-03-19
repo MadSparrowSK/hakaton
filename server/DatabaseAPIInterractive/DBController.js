@@ -5,7 +5,6 @@ class DBController {
             email,
             password
         }
-
     }
 }
 
