@@ -1,9 +1,11 @@
 const {Schema, model}  = require('mongoose')
 
-const TempUser = new Schema({
+const Activate = new Schema({
     email: { type:String, required:true, unique:true },
-    password: { type:String, required:true},
-    data_create: { type:Date, required:true, default: Date.now() },
+    verification: { type:String, required:true },
+    s_user_temp: { type:String, required:true},
+    data_create: { type:Date, required:true, default: Date.now()},
+    date_accept: { type:Date, default: null}
 })
 
-module.exports = model('TempUser', TempUser)
+module.exports = model('Activate', Activate)

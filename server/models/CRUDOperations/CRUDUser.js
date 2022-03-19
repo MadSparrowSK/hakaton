@@ -1,4 +1,4 @@
-const model = require('User')
+const model = require('../User')
 
 module.exports = class CRUDUser
 {
@@ -8,11 +8,7 @@ module.exports = class CRUDUser
      * @returns {Promise<HydratedDocument<any, {}, {}>[]>}
      */
     static async createOneUser(params) {
-        return model.create(params, (err) => {
-            if (err) {
-                return false
-            }
-        })
+        return await model.create(params)
     }
 
     /**
@@ -40,7 +36,7 @@ module.exports = class CRUDUser
             if (err) {
                 return null
             }
-        });
+        }).clone()
     }
 
     /**
@@ -54,7 +50,7 @@ module.exports = class CRUDUser
             if (err) {
                 return null
             }
-        })
+        }).clone()
     }
 
     /**
@@ -73,7 +69,7 @@ module.exports = class CRUDUser
 
     static async deleteManyUsers($condition)
     {
-        model.deleteMany($condition).then(function(){
+        await model.deleteMany($condition).then(function(){
             return true
         }).catch((e) => {
             return false
