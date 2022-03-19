@@ -25,7 +25,7 @@ class MailService {
         await this.transporter.sendMail({
             from: "kapitnov00@gmail.com",
             to: mail,
-            subject: 'DDoS-Guard, verify code',
+            subject: 'DDoS-Guard, verifying code',
             text: code
         })
     }

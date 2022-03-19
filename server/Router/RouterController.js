@@ -18,7 +18,6 @@ class RouterController {
             })
         } else {
             const {email} = req.body;
-            console.log(email)
             const hash = LogForm.getVerification()
             await MailController.sendRegLink({
                 email,
@@ -31,7 +30,11 @@ class RouterController {
         }
     }
     authGetRequest(req,res) {
-        res.status(200).json('ok')
+        const {id, hash} = req.query;
+        res.status(200).json({
+            message: 'user verified'
+        })
+        res.status(302).redirect('https://www.youtube.com/watch?v=dQw4w9WgXcQ')
     }
 }
 

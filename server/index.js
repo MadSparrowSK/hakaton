@@ -1,9 +1,12 @@
 const express = require('express')
 const cors = require('cors')
 const mongoose = require('mongoose')
+
+
 const loginRouter = require('./Router/login-router')
 const regRouter = require('./Router/reg-router')
 const authRouter = require('./Router/auth-router')
+const dynamicKeyRouter = require('./Router/dynamic-key-router')
 const errorRouter = require('./Router/error-router')
 
 const PORT = 5000;
@@ -16,6 +19,7 @@ app.use(cors());
 app.use(loginRouter);
 app.use(regRouter);
 app.use(authRouter);
+app.use('/hot-key', dynamicKeyRouter);
 app.use(errorRouter);
 
 const start = async () => {
