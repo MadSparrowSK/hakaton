@@ -9,11 +9,11 @@ class RouterController {
         const { email, password } = req.body;
         const isLogIn = await LogForm.loginRecord({ email, password });
         if(!isLogIn) {
-            res.status(LogForm.getErrorCode())
-                .json({ message:LogForm.getError() });
+            res.status(LogForm.getResponseCode())
+                .json({ message:LogForm.getResponse() });
         } else {
-            res.status(LogForm.getErrorCode()).json({
-                message: LogForm.getError()
+            res.status(LogForm.getResponseCode()).json({
+                message: LogForm.getResponse()
             })
         }
     }
