@@ -1,4 +1,5 @@
 const MailService = require('./MailService')
+const randomstring = require("randomstring");
 
 MailService.sendLink = MailService.sendLink.bind(MailService);
 MailService.sendCode = MailService.sendCode.bind(MailService);
@@ -11,8 +12,8 @@ class MailController {
     }
     async sendAuthCode(user) {
         const { email } = user;
-        const code = Math.floor(Math.random() * 1000);
-        await MailService.sendCode(email, code.toString())
+        const code = randomstring.generate(7);
+        await MailService.sendCode(email, code)
         return code
     }
 }
