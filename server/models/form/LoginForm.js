@@ -116,7 +116,10 @@ module.exports = class LoginForm
                             await this._sendMail({email: user.email, user: user})
                             this._error = 'На почту выслан код подтверждения'
                             this._errorCode = '200'
-                            return true;
+                            return {type: 'email'};
+                        case 'dynamic':
+                            this._errorCode = '200'
+                            return {type: 'dynamic'};
                         default:
                             this._error = 'Ошибка при поиске двухфакторной аутентификации'
                             this._errorCode = '404'
@@ -125,7 +128,7 @@ module.exports = class LoginForm
                 } else {
                     this._errorCode = '201'
                     this._error = 'Вы успешно авторизовались'
-                    return true
+                    return {type: null}
                 }
             }
             this._error = 'Неверно введен логин или пароль'
