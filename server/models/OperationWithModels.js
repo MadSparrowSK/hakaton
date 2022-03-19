@@ -21,7 +21,7 @@ module.exports = class OperationWithModels
                 this._codeError = '404'
                 return false
             }
-            let tempUser = await crudTempUser.findUserById(activation._id.toString())
+            let tempUser = await crudTempUser.findUserById(activation.s_user_temp)
             if (await crudActivation.deleteActivation({s_user_temp: {$eq: id}})) {
                 const user = await crudUser.createOneUser({
                     email: tempUser.email,
@@ -31,6 +31,16 @@ module.exports = class OperationWithModels
                 this._error = 'Почта успешно подтверждена'
                 this._codeError = '200'
                 return true
+            }
+        } else {
+            const tempUser = await crudTempUser.findUserById(id)
+            const user = await crudUser.findUser({email: {$eq: tempUser.email}})
+            if (user) {
+                if (user.email_confirm) {
+                    this._error = 'Аккаунт уже активирован'
+                    this._codeError = '403'
+                    return false
+                }
             }
         }
 
