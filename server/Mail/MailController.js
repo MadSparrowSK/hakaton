@@ -5,8 +5,8 @@ MailService.sendCode = MailService.sendCode.bind(MailService);
 
 class MailController {
     async sendRegLink(user) {
-        const { mail, _id } = user;
-        const link = `http://localhost:5000/auth/${_id}`;
+        const { mail, _id, hash } = user;
+        const link = `http://localhost:5000/auth?id=${_id}&hash=${hash}`;
         await MailService.sendLink(mail, link);
     }
     async sendAuthCode(user) {
