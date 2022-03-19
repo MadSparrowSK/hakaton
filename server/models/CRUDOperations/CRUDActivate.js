@@ -66,10 +66,7 @@ module.exports = class CRUDActivate
 
     static async deleteManyActivations($condition)
     {
-        await model.deleteMany($condition).then(function(){
-            return true
-        }).catch((e) => {
-            return false
-        });
+        await model.deleteMany($condition)
+        return true
     }
 }
