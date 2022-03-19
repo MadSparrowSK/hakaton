@@ -113,7 +113,7 @@ module.exports = class LoginForm
 
                     switch (authType.code){
                         case 'email':
-                            await this._sendMail({email: user.email})
+                            await this._sendMail(user.email)
                             this._error = 'На почту выслан код подтверждения'
                             this._errorCode = '200'
                             return true;
@@ -239,6 +239,6 @@ module.exports = class LoginForm
 
     async _sendMail(email)
     {
-        await MailController.sendAuthCode({email: email})
+        await MailController.sendAuthCode({email})
     }
 }
