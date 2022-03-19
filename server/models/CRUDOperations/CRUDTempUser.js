@@ -1,18 +1,14 @@
-const model = require('Activate')
+const model = require('../TempUser')
 
-class CRUDActivate
+module.exports = class CRUDTempUser
 {
     /**
      *
      * @param params object
-     * @returns {Promise<HydratedDocument<any, {}, {}>[]>}
+     * @returns {Promise<boolean>}
      */
     static async createOneUser(params) {
-        return model.create(params, (err) => {
-            if (err) {
-                return false
-            }
-        })
+        return await model.create(params)
     }
 
     /**
@@ -31,20 +27,6 @@ class CRUDActivate
 
     /**
      *
-     * @param id
-     * @returns {Promise<Query<any, any, {}, any>>}
-     */
-    static async findUserById(id)
-    {
-        return model.findById(id, (err) => {
-            if (err) {
-                return null
-            }
-        })
-    }
-
-    /**
-     *
      * @param filter object
      * @returns {Promise<Query<any, any, {}, any>>}
      */
@@ -54,7 +36,21 @@ class CRUDActivate
             if (err) {
                 return null
             }
-        });
+        }).clone();
+    }
+
+    /**
+     *
+     * @param id
+     * @returns {Promise<Query<any, any, {}, any>>}
+     */
+    static async findUserById(id)
+    {
+        return model.findById(id, (err) => {
+            if (err) {
+                return null
+            }
+        }).clone();
     }
 
     /**
@@ -73,7 +69,7 @@ class CRUDActivate
 
     static async deleteManyUsers($condition)
     {
-        model.deleteMany($condition).then(function(){
+        await model.deleteMany($condition).then(function(){
             return true
         }).catch((e) => {
             return false
