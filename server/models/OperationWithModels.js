@@ -100,10 +100,10 @@ module.exports = class OperationWithModels
     static async dualAuth(params)
     {
         const { email, code, status } = params
-        const user = crudUser.findUser({email: {$eq: email}})
+        const user = await crudUser.findUser({email: {$eq: email}})
         if (user) {
+            const typeAuth = await crudTypeAuth.findOne({code: {$eq: code}})
             if (!user.dual_auth) {
-                const typeAuth = await crudTypeAuth.findOne({code: {$eq: code}})
                 if (!typeAuth){
                     this._error = 'Ошибка данный тип аунтификации не найден';
                     this._codeError = '404'
