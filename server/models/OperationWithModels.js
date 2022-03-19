@@ -133,9 +133,11 @@ module.exports = class OperationWithModels
         const {email, code} = params
         const user = await crudUser.findUser({email: {$eq: email}})
         if (user) {
-            const userCode = await crudUserCode.findOne({s_user: {$eq: user._id.toString()}, dynamic: true})
-            if (userCode.code === code) {
-                return true
+            const userCode = await crudUserCode.findOne({s_user: {$eq: user._id.toString()}, dynamic: {$eq: true}})
+            if (userCode){
+                if (userCode.code === code) {
+                    return true
+                }
             }
         }
         return false
