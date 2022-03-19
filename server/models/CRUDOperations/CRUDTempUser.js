@@ -41,6 +41,20 @@ module.exports = class CRUDTempUser
 
     /**
      *
+     * @param filter object
+     * @returns {Promise<Query<any, any, {}, any>>}
+     */
+    static async findManyUser(filter)
+    {
+        return model.find(filter, (err) => {
+            if (err) {
+                return null
+            }
+        }).clone();
+    }
+
+    /**
+     *
      * @param id
      * @returns {Promise<Query<any, any, {}, any>>}
      */
