@@ -10,7 +10,7 @@ dynamicKeyRouter.get('/key/:id', async (req,res) => {
     if(!map.has(id)) {
         map.set(id, {
             "lastDate": Date.now(),
-            "key": await randomstring.generate(4),
+            "key": await randomstring.generate(5),
         })
     }
 
