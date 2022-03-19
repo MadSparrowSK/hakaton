@@ -42,8 +42,8 @@ class RouterController {
     async regPostRequest(req,res) {
         const userCheck = await LogForm.registerRecord(req.body);
         if(!userCheck) {
-            res.status(LogForm.getErrorCode()).json({
-                message: LogForm.getError()
+            res.status(LogForm.getResponseCode()).json({
+                message: LogForm.getResponse()
             })
         } else {
             const {email} = req.body;
@@ -54,7 +54,7 @@ class RouterController {
                 hash
             });
             res.status(200).json({
-                message: LogForm.getError()
+                message: LogForm.getResponse()
             })
         }
     }
