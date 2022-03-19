@@ -16,7 +16,7 @@ class MailService {
         await this.transporter.sendMail({
             from: "kapitnov00@gmail.com",
             to: mail,
-            subject: 'DDos-Guard, verify your account to get access to our products',
+            subject: 'DDoS-Guard, verify your account to get access to our products',
             html: '<a href="' + link + '">verification link</a>'
         })
     }
@@ -28,6 +28,7 @@ class MailService {
             subject: 'DDoS-Guard, verifying code',
             text: code
         })
+        return true;
     }
 }
 

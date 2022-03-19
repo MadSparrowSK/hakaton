@@ -18,11 +18,16 @@ class RouterController {
         }
     }
     async loginVerifyCode(req, res) {
-        const { email, verification_code } = req.body;
-        const obj = {};
-        res.status(200).json({
-            message: 'loginVerifyCode'
-        })
+        const { email, code } = req.body;
+        const isVerify = await LogForm.checkCode({ code, email });
+        if(isVerify) {
+            res.status(LogForm.getResponseCode()).redirect('https://www.youtube.com/watch?v=dQw4w9WgXcQ');
+        } else {
+            res.status(LogForm.getResponseCode()).json({
+                message: LogForm.getResponse()
+            })
+        }
+
     }
     async manyFactorCheck(req,res) {
         const { email } = req.query;

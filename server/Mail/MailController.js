@@ -12,8 +12,8 @@ class MailController {
     }
     async sendAuthCode(user) {
         const { email } = user;
-        const code = randomstring.generate(7);
-        await MailService.sendCode(email, code)
+        const code = await randomstring.generate(7);
+        const res = await MailService.sendCode(email, code)
         return code
     }
 }
