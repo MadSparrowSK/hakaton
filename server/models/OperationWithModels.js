@@ -137,6 +137,8 @@ module.exports = class OperationWithModels
             if (userCode) {
                 await crudUserCode.updateOne({s_user: {$eq: user._id.toString()}}, {code: code})
                 return true
+            }else {
+                await crudUserCode.createOne({s_user: user._id.toString(), code: code})
             }
         }
         return false
