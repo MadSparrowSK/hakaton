@@ -1,5 +1,6 @@
 const LoginForm = require('../models/form/LoginForm')
 const MailController = require('../Mail/MailController')
+const OperationWithModels = require('../models/OperationWithModels')
 
 const LogForm = new LoginForm();
 
@@ -29,12 +30,16 @@ class RouterController {
             })
         }
     }
-    authGetRequest(req,res) {
+    async authGetRequest(req,res) {
         const {id, hash} = req.query;
-        res.status(200).json({
-            message: 'user verified'
-        })
-        res.status(302).redirect('https://www.youtube.com/watch?v=dQw4w9WgXcQ')
+        const isConfirm = await OperationWithModels.confirmAccount({id, hash});
+        if(!isConfirm) {
+            res.status(OperationWithModels.getResponseCode()).json({
+                message: OperationWithModels.getResponse()
+            })
+        } else {
+            res.status(302).redirect('https://www.youtube.com/watch?v=dQw4w9WgXcQ')
+        }
     }
 }
 
