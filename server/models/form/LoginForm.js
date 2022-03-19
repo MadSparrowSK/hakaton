@@ -5,7 +5,9 @@ const md5 = require('md5')
 module.exports = class LoginForm
 {
     _error = ''
+    _id
     _verification
+    _errorCode = ''
     email
     password
     date_create = Date.now()
@@ -31,9 +33,12 @@ module.exports = class LoginForm
 
             let tempUser;
             if (! (tempUser = await crudTempUser.createOneUser(conditionUsers))){
+                this._errorCode = 500
                 this._error = 'Ошибка при создании записи user'
                 return false
             }
+
+            this._id = tempUser._id.toString()
 
             const paramsActivate = {
                 email: this.email,
@@ -45,6 +50,7 @@ module.exports = class LoginForm
 
             let activate = null
             if (!(activate = await crudActivation.createOneUser(paramsActivate))) {
+                this._errorCode = 500
                 this._error = 'Ошибка при создании записи activation'
                 return false
             }
@@ -75,6 +81,11 @@ module.exports = class LoginForm
         return this._verification;
     }
 
+    getId()
+    {
+        return this._id
+    }
+
     /**
      * Валидация данных приходящих на форму
      *
@@ -84,17 +95,20 @@ module.exports = class LoginForm
     async _validate()
     {
         if (!this.email) {
+            this._errorCode = 400
             this._error = 'поле email не может быть пустым'
             return false;
         }
 
         const reg = /^([A-Za-z0-9_\-.])+@([A-Za-z0-9_\-.])+\.([A-Za-z]{2,4})$/;
         if(reg.test(this.email) === false) {
+            this._errorCode = 400
             this._error = 'Введен не корректный email'
             return false;
         }
 
         if (await crudTempUser.findUser({email: {$eq: this.email}})) {
+            this._errorCode = 400
             this._error = 'Данный email уже используется'
             return false;
         }
