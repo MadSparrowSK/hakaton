@@ -8,7 +8,18 @@ const map = new Map();
 
 dynamicKeyRouter.post('/key',  async (req,res) => {
     const { email, code } = req.body;
-    res.status(200).json('ok')
+    const isAuth = await OperationWithModels.checkDynamicCode({ email,code });
+    if(isAuth) {
+        res.status(200).json({
+            message: 'ok'
+        })
+    } else {
+        res.status(403).json({
+            message: 'not ok'
+        })
+    }
+
+
 })
 
 dynamicKeyRouter.get('/key/:id', async (req,res) => {
