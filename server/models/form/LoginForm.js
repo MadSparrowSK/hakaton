@@ -1,5 +1,6 @@
 const crudTempUser = require('../CRUDOperations/CRUDTempUser')
 const crudTypeAuth= require('../CRUDOperations/CRUDTypeAuth')
+const crudUserCode= require('../CRUDOperations/CRUDUserCode')
 const MailController = require('../../Mail/MailController')
 const crudTypeAuthUser = require('../CRUDOperations/CRUDTypeAuthUser')
 const crudUser = require('../CRUDOperations/CRUDUser')
@@ -137,11 +138,34 @@ module.exports = class LoginForm
 
     }
 
+    async checkCode(params)
+    {
+        const { email, code } = params
+
+        const user = crudUser.findUser({email: {$eq: email}})
+        if (user) {
+            const userCode = crudUserCode.findOne({s_user: user._id.toString()})
+            if (userCode.code === code) {
+                crudUserCode.delete({s_user: {$eq: user._id.toString()}})
+                this._error = 'Успешно введен код';
+                this._errorCode = '200'
+                return true;
+            }
+            this._error = 'не верно введен код';
+            this._errorCode = '404'
+            return false
+        }
+
+        this._error = 'Ошибка аккаунт не найден';
+        this._errorCode = '404'
+        return false
+    }
+
     /**
      * Получает статус ошибки
      * @returns {*}
      */
-    getError()
+    getResponse()
     {
         return this._error
     }
@@ -151,7 +175,7 @@ module.exports = class LoginForm
      *
      * @returns {string}
      */
-    getErrorCode()
+    getResponseCode()
     {
         return this._errorCode
     }
@@ -214,7 +238,6 @@ module.exports = class LoginForm
 
         return true
     }
-
 
     async _sendMail(email)
     {
