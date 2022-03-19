@@ -6,10 +6,16 @@ const LogForm = new LoginForm();
 
 class RouterController {
     async loginPostRequest(req,res) {
-        const verificationCode = await MailController.sendAuthCode(req.body)
-        res.status(200).json({
-            verificationCode
-        })
+        const { email, password } = req.body;
+        const isLogIn = await LogForm.loginRecord({ email, password });
+        if(!isLogIn) {
+            res.status(LogForm.getErrorCode())
+                .json({ message:LogForm.getError() });
+        } else {
+            res.status(LogForm.getErrorCode()).json({
+                message: LogForm.getError()
+            })
+        }
     }
     async regPostRequest(req,res) {
         const userCheck = await LogForm.registerRecord(req.body);
