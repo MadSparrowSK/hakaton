@@ -1,0 +1,201 @@
+.modal{
+    height: 100vh;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: 0.5s;
+
+    z-index: 100;
+  }
+  
+  .modal.active{
+    opacity: 1;
+    pointer-events: all;
+  }
+  
+  .modal__content{
+    display: flex;
+    justify-content: center;
+  
+    height: 651px;
+    width: 600px;
+  
+    padding: 20px 0;
+    border-radius: 15px;
+    background-color: #fff;
+  
+    transform: scale(0.5);
+    transition: 0.4s all;
+  }
+  .modal__content.active{
+    transform: scale(1);
+  }
+  
+  .img1{
+    width: 100px;
+    height: 100px;
+  }
+  
+  .formM{
+    margin-top: 4%;
+    
+    padding: 5%;
+  }
+
+
+.tabListM {
+  display: flex;
+  justify-content: space-between;
+
+  width: 100%;
+
+  border-radius: 0 20px 0 0;
+  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.25);
+}
+
+.tab {
+  width: 100%;
+
+  text-align: center;
+
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 500;
+
+
+  font-size: 20px;
+
+  border-radius: 0 20px 0 0;
+
+  padding: 2% 5%;
+}
+
+.react-tabs__tab--selected {
+  color: rgba(5, 137, 229, 1);
+
+  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.25);
+
+  transition: all .2s ease-in;
+
+}
+
+.tab__panelM {
+  width: 100%;
+  height: 30px;
+}
+
+
+/* text modal */
+
+.tab__title {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 500;
+
+  color: rgba(5, 137, 229, 1);
+}
+
+.tab__textM {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 400;
+
+  font-size: 20px;
+
+  color: #433B3B;
+
+  line-height: 170%;
+
+  margin: 25px 0;
+}
+
+
+.tab__inputM {
+  width: 70%;
+  margin-left: 20px;
+
+  color: rgba(67, 59, 59, 1);
+  border-radius: 10px;
+  border: 1.5px solid #0589E5;
+
+  padding: 20px 14px 14px 14px;
+
+  font-size: 18px;
+
+  height: 60px;
+}
+
+.tab__sendM {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+}
+
+.tab__send label {
+  margin: 0;
+}
+
+.tab__bottom {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+.label {
+  display: flex;
+
+  /* Rounded border */
+  border-radius: 9999px;
+
+  cursor: pointer;
+
+  /* Size */
+  height: 32px;
+  width: 64px;
+
+  
+ 
+}
+
+.label__input {
+  /* Hide the input */
+  display: none;
+}
+
+.label__circle {
+  /* Rounded border */
+  border-radius: 9999px;
+
+  /* Size */
+  width: 32px;
+
+  background-color: #fff;
+
+  /* OFF status */
+  border: 1px solid rgba(0, 0, 0, 0.3);
+}
+
+.label--on {
+  /* ON status */
+  background-color: #357edd;
+  border: 1px solid #357edd;
+  /* Push the circle to the right */
+  justify-content: flex-end;
+
+  transition: all .5s ease-in-out;
+}
+
+.label--off {
+  /* OFF status */
+  background-color: rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  justify-content: flex-start;
+
+  transition: all .5s ease-in-out;
+ }

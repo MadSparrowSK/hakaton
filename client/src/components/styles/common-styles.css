@@ -1,0 +1,56 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500&display=swap');
+
+::placeholder {
+    color: rgba(164, 160, 160, 1);
+}
+
+button {
+    border: 1px solid rgba(5, 137, 229, 1);
+
+    padding: 18px 39px;
+    border-radius: 11.9339px;
+
+    font-size: 20px !important;
+}
+
+.btnBg {
+    color: #fff;
+    overflow: hidden;
+    
+    background-color: #0589E5;
+    transition: all .3s ease-in-out;
+}
+
+.btnBg:hover {
+    color: rgba(67, 59, 59, 1);
+
+    overflow: hidden;
+
+    background-color: #fff;
+    transition: all .3s ease-in-out;
+}
+
+.btn {
+    color: rgba(5, 137, 229, 1);
+    transition: all .3s ease-in-out;
+
+    overflow: hidden;
+    
+}
+
+.btn:hover {
+    color: #fff;
+
+    overflow: hidden;
+
+    background-color: #0589E5;
+    transition: all .3s ease-in-out;
+}
+
+.hide {
+    display: none;
+}
+
+.show {
+    display: block;
+}

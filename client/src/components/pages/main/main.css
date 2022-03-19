@@ -1,0 +1,56 @@
+.main {
+    padding-top: 7%;
+    padding-left: 10%;
+
+   width: 45%;
+}
+
+.main__topSubTitle {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
+
+    font-size: 18px;
+}
+
+.main__title {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
+
+    font-size: 65px;
+    color: rgba(5, 137, 229, 1);
+
+    font-weight: 500;
+}
+
+
+.main__text {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 400;
+
+    margin-top: 50px;
+
+    font-size: 22px;
+    line-height: 180%;
+}
+
+.main__btns {
+    margin-top: 60px;
+    margin-bottom: 110px;
+}
+
+.main--btn {
+    margin-left: 20px;
+}
+
+.main--link {
+    font-family: 'Montserrat', sans-serif;
+
+    color: rgba(5, 137, 229, 1) !important;
+    font-size: 20px;
+
+    margin-left: 40px;
+}
+
+.main--link:first-child {
+    margin-left: 0;
+}

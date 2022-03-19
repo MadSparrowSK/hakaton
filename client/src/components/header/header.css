@@ -1,0 +1,197 @@
+@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@600&display=swap');
+
+
+.rotateEl {
+    transform: rotate(180deg);
+}
+
+
+.header {
+    background-color: #FFFFFF;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.15);
+
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+
+    line-height: 100px;
+
+    font-size: 24px;
+}
+
+.header__logo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 2%;
+}
+
+.header__text {
+    font-size: 20px;
+    color: rgba(67, 59, 59, 1);
+
+    font-family: 'Raleway', sans-serif;
+    font-weight: 600;
+}
+
+.header__img {
+    display: block;
+
+    width: 25px;
+    height: 25px;
+
+    margin-right: 11px;
+}
+
+.header__nav {
+
+    display: flex;
+    justify-content: center;
+}
+
+.header__link {
+    display: inline-block;
+
+    font-size: 20px;
+    color: rgba(67, 59, 59, 1);
+
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
+
+    margin-left: 60px;
+    transition: all .3s ease-in-out;
+}
+
+.header__link:first-child {
+    margin-left: 0;
+}
+
+.header__link:hover {
+    color: #fff;
+    background-color: rgba(5, 137, 229, 1);
+    transition: all .3s ease-in-out;
+}
+
+
+.two {
+    color: rgba(5, 137, 229, 1) !important;
+}
+
+
+
+/* Кнопка выпадающего списка */
+.dropbtn {
+    display: block;
+
+    color: rgba(5, 137, 229, 1);
+    border: 1.5px solid rgba(5, 137, 229, 1) !important;
+    box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.15);
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+    height: 60px;
+    width: 253px;
+
+    font-size: 24px;
+
+    
+    position: relative;
+  }
+
+   /* .dropbtn::after {
+    content: ''; 
+    position: absolute; 
+    top: 30%;
+    right: 25%; 
+
+    width: 18px;
+    height: 14px;
+
+    border-left: 14px solid transparent;
+	border-right: 14px solid transparent;
+	border-bottom: 18px solid rgba(5, 137, 229, 1);
+   } */
+
+  
+  
+  /* Контейнер <div> - необходим для размещения выпадающего содержимого */
+  .hedaer__client {
+    position: relative;
+    display: inline-block;
+
+    
+    height: 60px;
+    width: 253px;
+  }
+
+  .dropbtn__content {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      position: relative;
+      z-index: -10;
+      
+  }
+
+  .hedaer__imgRotate {
+      width: 18px;
+      height: 14px;
+
+      margin-left: 10px;
+  }
+  
+  /* Выпадающее содержимое (скрыто по умолчанию) */
+  .dropdown-content {
+    display: none;
+
+    position: absolute;
+
+    background-color: #fff;
+    /* min-width: 160px; */
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+
+    border-radius: 0 0 10px 10px;
+
+  }
+  
+  /* Ссылки внутри выпадающего списка */
+  .dropwodwn__btn {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
+
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+
+    border: none;
+
+    border-radius: none;
+
+  }
+
+  .dropdown__img {
+      display: block;
+  }
+
+.content__item {
+    margin-top: 17px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
+    height: 50px;
+}
+  
+  
+  /* Показать выпадающее меню (используйте JS, чтобы добавить этот класс .dropdown-content содержимого, когда пользователь нажимает на кнопку выпадающего списка) */
+.show {
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}

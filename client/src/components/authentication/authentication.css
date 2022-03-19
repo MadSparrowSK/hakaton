@@ -1,0 +1,290 @@
+.authentication{
+  height: 100vh;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: 0.5s;
+
+  z-index: 100;
+  
+}
+
+.authentication.active{
+  opacity: 1;
+  pointer-events: all;
+}
+
+.authentication__content{
+  display: flex;
+  justify-content: center;
+
+  background-image: url("../img/bg/bg-authentication.png");
+  background-repeat: no-repeat;
+  background-position-x: left;
+  background-position-y: top;
+
+  height: 80%;
+  width: 70%;
+
+  padding: 20px 0;
+  border-radius: 15px;
+  background-color: #fff;
+
+  transform: scale(0.5);
+  transition: 0.4s all;
+}
+.authentication__content.active{
+  transform: scale(1);
+}
+
+.img1{
+  width: 100px;
+  height: 100px;
+}
+
+.form{
+  margin-top: 15%;
+  
+  padding: 5%;
+
+}
+
+.react-tabs {
+  width: 100%;
+
+ 
+}
+
+.tabList {
+display: flex;
+justify-content: space-between;
+
+width: 50%;
+
+margin-left: auto;
+
+border-radius: 0 20px 0 0;
+box-shadow: none;
+}
+
+.tab {
+width: 100%;
+
+text-align: center;
+
+font-family: 'Montserrat', sans-serif;
+font-weight: 500;
+
+box-shadow: 1px -9px 14px -5px rgba(34, 60, 80, 0.16) inset;
+
+font-size: 20px;
+
+border-radius: 0 20px 0 0;
+
+padding: 2% 5%;
+}
+
+.react-tabs__tab--selected {
+color: rgba(5, 137, 229, 1);
+
+box-shadow: none;
+
+transition: all .2s ease-in;
+
+}
+
+.tab__panel {
+  width: 43%;
+  margin-left: auto;
+  margin-right: 5%;
+  
+}
+
+#tab__sendPass {
+  -webkit-text-security: disc;
+}
+
+/* text authentication */
+
+.tab__title {
+font-family: 'Montserrat', sans-serif;
+font-weight: 500;
+
+color: rgba(5, 137, 229, 1);
+}
+
+.tab__text {
+font-family: 'Montserrat', sans-serif;
+font-weight: 400;
+
+margin-left: 20px !important;
+
+font-size: 14px;
+
+color: rgba(106, 106, 106, 1);
+
+line-height: 170%;
+
+margin: 25px 0;
+}
+
+
+.tab__input {
+width: 100%;
+margin-left: 0 !important;
+
+color: rgba(67, 59, 59, 1);
+border-radius: 10px;
+border: 1.5px solid #0589E5;
+
+padding: 20px 14px 14px 14px;
+
+font-size: 18px;
+
+height: 60px;
+}
+
+
+
+.tab__send {
+display: flex;
+justify-content: center;
+align-items: center;
+
+margin-top: 40px;
+margin-bottom: 40px;
+}
+
+.tab__send:first-child {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.tab__send label {
+margin: 0;
+}
+
+.tab__bottom {
+display: flex;
+justify-content: space-between;
+align-items: center;
+}
+
+.tab__bottom--top {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+.label {
+display: flex;
+
+/* Rounded border */
+border-radius: 9999px;
+
+cursor: pointer;
+
+/* Size */
+height: 32px;
+width: 64px;
+
+
+
+}
+
+.label__input {
+/* Hide the input */
+display: none;
+}
+
+.label__circle {
+/* Rounded border */
+border-radius: 9999px;
+
+/* Size */
+width: 32px;
+
+background-color: #fff;
+
+/* OFF status */
+border: 1px solid rgba(0, 0, 0, 0.3);
+}
+
+.label--on {
+/* ON status */
+background-color: #357edd;
+border: 1px solid #357edd;
+/* Push the circle to the right */
+justify-content: flex-end;
+
+transition: all .5s ease-in-out;
+}
+
+.label--off {
+/* OFF status */
+background-color: rgba(0, 0, 0, 0.1);
+border: 1px solid rgba(0, 0, 0, 0.3);
+justify-content: flex-start;
+
+transition: all .5s ease-in-out;
+}
+
+
+
+#rePass {
+   display: inline-block;
+
+   color: rgba(5, 137, 229, 1);
+   border: none;
+
+   font-size: 14px;
+}
+
+.btnEnter {
+  margin-top: 40px;
+
+  width: 100%;
+  background-color: #0589E5;
+  color: #fff;
+
+  transition: all .3s ease-in-out;
+}
+
+
+.btnEnter:hover {
+  color:rgba(0, 0, 0, 0.897);
+
+  transition: all .3s ease-in-out;
+  background-color: transparent;
+}
+
+.img__mail {
+  display: block;
+}
+
+.input__code {
+  display: flex;
+  justify-content: space-between;
+}
+
+.errorInput {
+  border: 1px solid red;
+}
+
+
+#text__forgotPass {
+  color: rgba(5, 137, 229, 1);
+  font-size: 32px;
+
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 500;
+
+}
