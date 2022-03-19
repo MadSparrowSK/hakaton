@@ -124,7 +124,7 @@ module.exports = class LoginForm
                             return false
                     }
                 } else {
-                    this._errorCode = '200'
+                    this._errorCode = '201'
                     this._error = 'Вы успешно авторизовались'
                     return true
                 }
