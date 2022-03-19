@@ -1,5 +1,6 @@
 const {Router} = require('express')
 const randomstring = require("randomstring");
+const OperationWithModels = require('../models/OperationWithModels')
 
 const dynamicKeyRouter = new Router()
 
@@ -27,9 +28,10 @@ dynamicKeyRouter.get('/key/:id', async (req,res) => {
     })
 
     const currentDate = Date.now();
-    if(Math.abs(map.get(id).lastDate - currentDate) > 10000) {
+    if(Math.abs(map.get(id)['lastDate'] - currentDate) > 10000) {
         map.get(id)['lastDate'] = currentDate;
         map.get(id)['key'] = await randomstring.generate(4);
+        await OperationWithModels.reWriteCodeDynamic({ id,  code: map.get(id)['key']})
     }
     res.write(`data: ${map.get(id)['key']}\n\n`);
     res.end();
