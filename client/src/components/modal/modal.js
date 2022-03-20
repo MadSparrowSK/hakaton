@@ -80,7 +80,7 @@ export default class Modal extends React.Component {
         try {
 
             const res = await axios.post("http://localhost:5000/many-factor-activate", {
-                email: "falconhelicopter@mail.ru",
+                email: localStorage.getItem("email"),
                 code: "dynamic",
                 status: !this.state.activeBtDynamic
             });

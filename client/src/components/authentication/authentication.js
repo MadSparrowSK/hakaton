@@ -148,11 +148,38 @@ export default class Authentication extends React.Component {
             });
 
             const data = await responce.data;
+            const type = await data.type;
 
             //тут вывести инфу о запросе
             this.setState({
                 resData: data
             })
+
+
+            let enterIn = document.querySelector('#enterIn');
+            enterIn.classList.add("hide");
+
+            let twoFactorka = document.querySelector('#tab__twoFactorka');
+            twoFactorka.classList.remove("hide");
+
+            if (type === "email") {
+
+                let temp = document.querySelector('.authentication__content');
+                temp.style.backgroundImage = "url('../img-passIn.png)";
+
+                this.setState({
+                    textSend: `Сообщение отправлено на ${localStorage.getItem("email")}`,
+                    typeKey: "email"
+                })
+
+            } else if (type === "dynamic") {
+
+                this.setState({
+                    textSend: `Сообщение отправлено на телефон`,
+                    typeKey: "dynamic"
+                })
+
+            }
 
             //дальше чёл подтверждает и потом входит в акк
             //подтвердить
@@ -292,6 +319,8 @@ export default class Authentication extends React.Component {
                                 <div className="tab__send">
                                     <input id="tab__sendPassRegistration2" type="password" className="tab__input" placeholder="Повторите пароль"></input>
                                 </div>
+
+                                <p id="enterText" className="tab__text">{resData}</p>
 
                                 <button id="btnEnterRegistration" className="btnEnter" onClick={this.sendRegistr}>Зарегистрироваться</button>
 
