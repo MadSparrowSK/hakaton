@@ -147,11 +147,11 @@ module.exports = class OperationWithModels
     {
         const {id, email, code} = params
         let user = null;
-        if (id){
-            user = await crudUser.findUserById(id)
+        if (email){
+            user = await crudUser.findUser({email: {$eq: email}})
         } else {
-            if (email){
-                user = await crudUser.findUser({email: {$eq: email}})
+            if (id){
+                user = await crudUser.findUserById(id)
             }
         }
 
