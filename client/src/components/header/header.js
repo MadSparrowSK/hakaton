@@ -45,6 +45,18 @@ export default class Header extends React.Component {
     exitToModal = () => {
 
         localStorage.removeItem("email");
+
+        let tab__twoFactorka = document.querySelector('#tab__twoFactorka');
+        tab__twoFactorka.classList.add("hide");
+
+        let enterIn = document.querySelector('#enterIn');
+        enterIn.classList.remove("hide");
+
+
+        let arrIn = document.querySelectorAll('.inp__delete');
+        arrIn.forEach(it => it.value = '')
+
+
         this.props.setActive(true);
     }
 
@@ -66,13 +78,6 @@ export default class Header extends React.Component {
                     <p className="header__text">DDOS-GUARD</p>
                 </div>
 
-                {/* <nav className="header__nav">
-                    <a href="#" className="header__link">Продукты и решения</a>
-                    <a href="#" className="header__link">Информация</a>
-                    <a href="#" className="header__link">База знаний</a>
-                    <a href="#" className="header__link">Блог</a>
-                </nav> */}
-
                 <div className="hedaer__client">
 
                     <button type="button" onClick={this.opneHideMenu} className="dropbtn">
@@ -81,12 +86,6 @@ export default class Header extends React.Component {
                     </button>
 
                     <div id="myDropdown" className={classMenu}>
-
-                        {/* <div className="content__item">
-                            <button key="btn-1" className="dropwodwn__btn">Личная информация</button>
-
-                            <img key="1" className="dropdown__img" src={line} alt="line" />
-                        </div> */}
 
                         <div className="content__item">
                             <button onClick={this.props.onOpenModal} key="btn-2" className="dropwodwn__btn two">Двухфакторная аутентинфикация</button>
@@ -108,16 +107,3 @@ export default class Header extends React.Component {
     }
 
 }
-
-// const arrBtn = [
-//     { id: Date.now().toFixed(7), text: "Личная информация", className: "dropwodwn__btn", img: true },
-//     { id: Date.now().toFixed(7), text: "Двухфакторная аутентификация", className: "dropwodwn__btn", img: true },
-//     { id: Date.now().toFixed(7), text: "Выход", className: "dropwodwn__btn", img: false }
-// ];
-
-// const arrLinks = [
-//     { id: Date.now().toFixed(7), text: "Продукты и решения", className: "header__link header--link" },
-//     { id: Date.now().toFixed(7), text: "Информация", className: "header__link header--link" },
-//     { id: Date.now().toFixed(7), text: "База знаний", className: "header__link header--link" },
-//     { id: Date.now().toFixed(7), text: "Блог", className: "header__link header--link" }
-// ];

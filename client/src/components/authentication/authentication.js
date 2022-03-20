@@ -61,6 +61,7 @@ export default class Authentication extends React.Component {
             if (res.status === 201) {
 
                 this.props.setActive(false);
+                
 
             } else if (res.status === 200) {
 
@@ -83,10 +84,6 @@ export default class Authentication extends React.Component {
                         typeKey: "email"
                     })
 
-
-                    
-
-
                 } else if (type === "dynamic") {
 
                     this.setState({
@@ -94,10 +91,10 @@ export default class Authentication extends React.Component {
                         typeKey: "dynamic"
                     })
 
-
-
-
-
+                } else {
+                    this.setState({
+                        textSend: "Ошибка авторизации"
+                    })
                 }
 
             }
@@ -147,46 +144,19 @@ export default class Authentication extends React.Component {
                 password: passC.toString()
             });
 
-            const data = await responce.data;
-            const type = await data.type;
-
-            //тут вывести инфу о запросе
-            this.setState({
-                resData: data
-            })
-
-
-            let enterIn = document.querySelector('#enterIn');
-            enterIn.classList.add("hide");
-
-            let twoFactorka = document.querySelector('#tab__twoFactorka');
-            twoFactorka.classList.remove("hide");
-
-            if (type === "email") {
-
-                let temp = document.querySelector('.authentication__content');
-                temp.style.backgroundImage = "url('../img-passIn.png)";
-
+           
+            if (responce.status === 200) {
                 this.setState({
-                    textSend: `Сообщение отправлено на ${localStorage.getItem("email")}`,
-                    typeKey: "email"
+                    textSend: "Код подтверждения отправлен на почту"
                 })
-
-            } else if (type === "dynamic") {
-
-                this.setState({
-                    textSend: `Сообщение отправлено на телефон`,
-                    typeKey: "dynamic"
-                })
-
             }
 
-            //дальше чёл подтверждает и потом входит в акк
-            //подтвердить
 
         } catch {
 
-
+            this.setState({
+                textSend: "Аккаунт уже существует"
+            })
 
         }
 
@@ -229,6 +199,7 @@ export default class Authentication extends React.Component {
                 });
 
                 if (res.status === 200) {
+
                     this.props.setActive(false);
                 }
                 // else {
@@ -272,18 +243,18 @@ export default class Authentication extends React.Component {
                             <form id="enterIn" className="form">
 
                                 <div className="tab__send">
-                                    <input id="tab__sendEmail" type="email" className="tab__input" placeholder="E-mail"></input>
+                                    <input id="tab__sendEmail" type="email" className="tab__input inp__delete" placeholder="E-mail"></input>
                                 </div>
 
                                 <div className="tab__send">
-                                    <input id="tab__sendPass" type="password" className="tab__input" placeholder="Пароль"></input>
+                                    <input id="tab__sendPass" type="password" className="tab__input inp__delete" placeholder="Пароль"></input>
                                 </div>
 
                                 <div className="tab__bottom">
 
                                     <div className="tab__bottom--top">
                                         <label onClick={this.onActiveBtn} className={activeBtnL}>
-                                            <input type="checkbox" className="label__input" />
+                                            <input type="checkbox" className="label__input inp__delete" />
 
                                             <div className="label__circle"></div>
                                         </label>
@@ -291,13 +262,13 @@ export default class Authentication extends React.Component {
                                         <p className="tab__text">Запомнить меня</p>
                                     </div>
 
-                                    <button type="button" id="rePass" onClick={this.showForgotTab}>Забыли пароль?</button>
+                                    <button type="button" id="rePass">Забыли пароль?</button>
 
                                 </div>
 
                                 <button type="button" onClick={this.checkUser} id="btnEnterIn" className="btnEnter">Войти</button>
 
-                                <p id="enterText" className="tab__text">{resData}</p>
+                                <p id="enterText" className="tab__text">{textSend}</p>
 
                             </form>
 
@@ -309,18 +280,18 @@ export default class Authentication extends React.Component {
                             <form id="tab__registration" className="form">
 
                                 <div className="tab__send">
-                                    <input id="tab__sendEmailRegistration" type="email" className="tab__input" placeholder="E-mail"></input>
+                                    <input id="tab__sendEmailRegistration" type="email" className="tab__input inp__delete" placeholder="E-mail"></input>
                                 </div>
 
                                 <div className="tab__send">
-                                    <input id="tab__sendPassRegistration" type="password" className="tab__input" placeholder="Пароль"></input>
+                                    <input id="tab__sendPassRegistration" type="password" className="tab__input inp__delete" placeholder="Пароль"></input>
                                 </div>
 
                                 <div className="tab__send">
-                                    <input id="tab__sendPassRegistration2" type="password" className="tab__input" placeholder="Повторите пароль"></input>
+                                    <input id="tab__sendPassRegistration2" type="password" className="tab__input inp__delete" placeholder="Повторите пароль"></input>
                                 </div>
 
-                                <p id="enterText" className="tab__text">{resData}</p>
+                                <p id="enterTextReg" className="tab__text">{textSend}</p>
 
                                 <button id="btnEnterRegistration" className="btnEnter" onClick={this.sendRegistr}>Зарегистрироваться</button>
 
@@ -335,14 +306,14 @@ export default class Authentication extends React.Component {
 
                                 <p className="tab__text">Пройдите двуфакторную аутентификацию</p>
 
-                                <p className="tab__text">{textSend}</p>
+                                <p id="twoFactorka__text" className="tab__text">{textSend}</p>
 
                                 <img className="img__mail" src="https://www.shareicon.net/data/128x128/2016/07/19/798338_security_512x512.png" alt="img" />
 
                                 <p className="tab__text">Введите код подтверждения</p>
 
                                 <div className="input__code">
-                                    <input id="inpt__Code" className="tab__input" type="text" />
+                                    <input id="inpt__Code" className="tab__input inp__delete" type="text" />
                                 </div>
 
                                 <button type="button" id="enterCode" className="btnEnter" onClick={this.sendDynamicCode}>Ввести</button>
@@ -359,15 +330,15 @@ export default class Authentication extends React.Component {
                                 <p id="text__forgotPass">Восстановление пароля</p>
 
                                 <div className="tab__send">
-                                    <input id="tab__sendforgotPass" type="password" className="tab__input" placeholder="Пароль"></input>
+                                    <input id="tab__sendforgotPass" type="password" className="tab__input inp__delete" placeholder="Пароль"></input>
                                 </div>
 
 
                                 <div className="tab__send">
-                                    <input id="tab__sendforgotPass2" type="password" className="tab__input" placeholder="Подтвердите пароль"></input>
+                                    <input id="tab__sendforgotPass2" type="password" className="tab__input inp__delete" placeholder="Подтвердите пароль"></input>
                                 </div>
 
-                                <button type="button" id="btnForgotPass" className="btnEnter" onClick={this.showEnterBlock}>Восстановить</button>
+                                <button type="button" id="btnForgotPass" className="btnEnter inp__delete" onClick={this.showEnterBlock}>Восстановить</button>
 
                             </form>
 
