@@ -15,6 +15,14 @@ const app = express();
 
 app.use(express.json());
 app.use(cors());
+app.use((req,res, next) => {
+    res.set({
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Methods': '*',
+        'Access-Control-Allow-Headers': '*'
+    })
+    next();
+})
 
 app.use(loginRouter);
 app.use(regRouter);

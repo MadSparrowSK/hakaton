@@ -22,7 +22,9 @@ class RouterController {
         const { email, code } = req.body;
         const isVerify = await LogForm.checkCode({ code, email });
         if(isVerify) {
-            res.status(LogForm.getResponseCode()).redirect('https://www.youtube.com/watch?v=dQw4w9WgXcQ');
+            res.status(LogForm.getResponseCode()).json({
+                message: 'ok'
+            });
         } else {
             res.status(LogForm.getResponseCode()).json({
                 message: LogForm.getResponse()
@@ -31,7 +33,7 @@ class RouterController {
 
     }
     async manyFactorCheck(req,res) {
-        const { email } = req.query;
+        const { email } = req.body;
         const typeManyFactor = await OperationWithModels.modalAuth({ email });
         res.status(OperationWithModels.getResponseCode()).json({
             message: OperationWithModels.getResponse(),
