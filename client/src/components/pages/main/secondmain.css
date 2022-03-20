@@ -1,0 +1,136 @@
+.secondmain {
+  background-image: url("./Icons/bg-secondmain.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  margin-top: 24%;
+}
+.main1 {
+  padding-top: 6%;
+  margin-left: 55%;
+}
+
+.IMG {
+    
+  position: absolute;
+  margin-left: 12%;
+  width: 34%;
+  margin-top: -3%;
+}
+
+.secondmain_title {
+  font-family: "Montserrat", sans-serif;
+  font-weight: 500;
+  width: 700px;
+
+  font-size: 65px;
+  color: rgba(5, 137, 229, 1);
+
+  font-weight: 500;
+}
+
+.Tag2 {
+  font-family: "Montserrat", sans-serif;
+  font-weight: 400;
+  width: 700px;
+  margin-left: 4px;
+
+  font-size: 18px;
+  line-height: 180%;
+}
+.Tag3 {
+  font-family: "Montserrat", sans-serif;
+  font-weight: 400;
+  width: 700px;
+  margin-top: 4%;
+
+  font-size: 22px;
+  line-height: 180%;
+}
+.Tag4 {
+  font-family: "Montserrat", sans-serif;
+  font-weight: 400;
+  width: 700px;
+  margin-top: 18px;
+
+  font-size: 22px;
+  line-height: 180%;
+}
+.Tag5 {
+  font-family: "Montserrat", sans-serif;
+  font-weight: 400;
+  width: 700px;
+  margin-top: 20px;
+
+  font-size: 22px;
+  line-height: 180%;
+}
+
+.dow {
+  padding-left: 14%;
+  padding-top: 10%;
+}
+
+.container {
+  padding-top: 10%;
+  padding-left: 15%;
+}
+.container1 {
+  padding-top: 5px;
+
+  padding-left: 36%;
+}
+.container2 {
+  padding-left: 56%;
+}
+.container3 {
+  padding-left: 76%;
+}
+
+.icon1 {
+  position: absolute;
+  width: 100px;
+  height: 100px;
+
+  background: #ffffff;
+  box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+}
+.icon {
+  padding-left: 20px;
+  padding-top: 13px;
+}
+
+.form_text1 {
+  position: absolute;
+  width: 246px;
+  height: 47px;
+  margin-top: 35px;
+
+  font-family: "Montserrat";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 26px;
+  line-height: 180%;
+  /* identical to box height, or 47px */
+
+  color: #0589e5;
+}
+.form_text2 {
+  position: absolute;
+  width: 292px;
+  height: 99px;
+  margin-top: 100px;
+
+  font-family: "Montserrat";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 22px;
+  line-height: 150%;
+  /* or 33px */
+
+  color: #433b3b;
+}
+
+.zal {
+  margin-top: -2%;
+}

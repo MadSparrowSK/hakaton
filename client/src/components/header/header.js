@@ -42,6 +42,11 @@ export default class Header extends React.Component {
         return this.props.openModal;
     }
 
+    exitToModal = () => {
+
+        localStorage.removeItem("email");
+        this.props.setActive(true);
+    }
 
     render() {
 
@@ -90,7 +95,7 @@ export default class Header extends React.Component {
                         </div>
 
                         <div className="content__item">
-                            <button key="btn-3" className="dropwodwn__btn">Выход</button>
+                            <button id="dropwodwn__btn" key="btn-3" className="dropwodwn__btn" onClick={this.exitToModal}>Выход</button>
                         </div>
 
                     </div>

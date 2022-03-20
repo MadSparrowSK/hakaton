@@ -1,0 +1,75 @@
+.foot{
+    flex: 0 0 auto;
+    margin-top: 20%;
+    height: 25%;
+    background: linear-gradient(92.56deg, #81BAFF -1.69%, #6427FF 96.86%);
+    
+}
+/* Блоки данных */
+.Ttt{
+    position: absolute; 
+    padding-left: 15%;
+    
+}
+.tel {
+    font-weight: 400;
+    font-size: 22px;
+    line-height: 150%;  
+    color: #FFFFFF;  
+    font-family: 'Montserrat';
+    font-style: normal;  
+    width: 458px;
+}
+.tephone {
+    font-weight: 600;
+    font-size: 26px;
+    line-height: 180%;
+    
+    color: #FFFFFF;
+}
+.Aaa {
+    position: absolute; 
+    padding-left: 56%;
+    
+}
+.eee {
+    position: absolute; 
+    padding-left: 36%;
+  
+}
+
+.Links{
+    padding-left: 80%;
+    font-family: 'Montserrat';
+font-style: normal;
+font-weight: 600;
+font-size: 22px;
+line-height: 190%;
+/* identical to box height, or 42px */
+
+
+color: #FFFFFF;
+
+}
+.foot_blok{
+    padding-top: 6%;
+}
+.H1{
+    position: absolute;
+width: 324px;
+height: 72px;
+
+
+font-family: 'Montserrat';
+font-style: normal;
+font-weight: 500;
+font-size: 65px;
+line-height: 110%;
+/* identical to box height, or 72px */
+
+
+color: #FFFFFF;
+position: absolute; 
+    padding-left: 14.5%;
+    padding-top: 2%;
+}

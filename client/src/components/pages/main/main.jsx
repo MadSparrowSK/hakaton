@@ -15,16 +15,16 @@ const MainPage = () => {
 
             <p className="main__text">Оптимизируем работу вашего сайта и обеспечим его максимальную доступность. Подключите услугу, и мы возьмем безопасность ресурса на себя. </p>
 
-            <div className="main__btns">
+            {/* <div className="main__btns">
                 <button className="btnBg">Подключить</button>
                 <button className="btn main--btn">Связаться</button>
-            </div>
+            </div> */}
 
-            <div className="main__links">
+            {/* <div className="main__links">
                 <a href="#" className="main--link">Instagram</a>
                 <a href="#" className="main--link">Linkedin</a>
                 <a href="#" className="main--link">Telegram</a>
-            </div>
+            </div> */}
 
         </div>
     )

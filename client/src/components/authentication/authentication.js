@@ -11,8 +11,6 @@ export default class Authentication extends React.Component {
         super(props);
     }
 
-    _email = "123";
-    _pas = "123";
     state = {
         activeBtn: false,
         textSend: null,
@@ -41,6 +39,7 @@ export default class Authentication extends React.Component {
 
     }
 
+    //войти
     checkUser = async () => {
 
         let email = document.querySelector('#tab__sendEmail');
@@ -84,12 +83,20 @@ export default class Authentication extends React.Component {
                         typeKey: "email"
                     })
 
+
+                    
+
+
                 } else if (type === "dynamic") {
 
                     this.setState({
                         textSend: `Сообщение отправлено на телефон`,
                         typeKey: "dynamic"
                     })
+
+
+
+
 
                 }
 

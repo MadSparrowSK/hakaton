@@ -7,6 +7,9 @@ import Header from './components/header/header';
 import MainPage from './components/pages/main/main';
 import MyModal from './components/modal/modal';
 import Authentication from './components/authentication/authentication';
+import Secondmain from './components/pages/main/secondmain';
+import Podaval from './components/pages/podaval';
+
 
 
 window.onclick = function (e) {
@@ -53,6 +56,8 @@ export default class App extends React.Component {
 
   }
 
+  
+
   render() {
 
     return (
@@ -61,12 +66,15 @@ export default class App extends React.Component {
 
         <Authentication active={this.state.auth} setActive={this.setAuthActive}/>
 
-        <Header onOpenModal={ this.setmodalActive}/>
+        <Header setActive={this.setAuthActive} onOpenModal={ this.setmodalActive}/>
 
         <MainPage />
+        <Secondmain />
 
         <MyModal active={this.state.openModal} setActive={this.setmodalActive} />
 
+
+        <Podaval/> 
       </div>
 
     );

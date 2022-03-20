@@ -48,7 +48,8 @@ export default class Modal extends React.Component {
         e.preventDefault();
 
         this.setState({
-            activeBtnEmail: !this.state.activeBtnEmail
+            activeBtnEmail: !this.state.activeBtnEmail,
+            activeBtDynamic: false
         })
 
         try {
@@ -56,7 +57,7 @@ export default class Modal extends React.Component {
             const res = await axios.post("http://localhost:5000/many-factor-activate", {
                 email: localStorage.getItem("email"),
                 code: "email",
-                status: this.state.activeBtnEmail
+                status: !this.state.activeBtnEmail
             });
 
         } catch {
@@ -72,6 +73,7 @@ export default class Modal extends React.Component {
         console.log(this.state.activeBtDynamic)
 
         this.setState({
+            activeBtnEmail: false,
             activeBtDynamic: !this.state.activeBtDynamic
         })
 
@@ -80,7 +82,7 @@ export default class Modal extends React.Component {
             const res = await axios.post("http://localhost:5000/many-factor-activate", {
                 email: "falconhelicopter@mail.ru",
                 code: "dynamic",
-                status: this.state.activeBtDynamic
+                status: !this.state.activeBtDynamic
             });
 
         } catch {
@@ -115,7 +117,7 @@ export default class Modal extends React.Component {
                     <Tabs>
                         <TabList className="tabListM">
                             <Tab className="tab">E-MAIL</Tab>
-                            <Tab className="tab">Telephone</Tab>
+                            <Tab className="tab">Mob-Guard</Tab>
                         </TabList>
 
                         <TabPanel className="tab__panelM">
@@ -128,7 +130,7 @@ export default class Modal extends React.Component {
 
                                 <div className="tab__sendM">
                                     <label htmlFor="tab__sendEmail" className="tab__textM">E-mail:</label>
-                                    <input id="tab__sendEmailM" value={localStorage.getItem("email")} type="email" className="tab__inputM" placeholder="main@mail.ru"></input>
+                                    <input id="tab__sendEmailM" disabled="disabled" value={localStorage.getItem("email")} type="email" className="tab__inputM" placeholder="main@mail.ru"></input>
                                 </div>
 
                                 <div className="tab__bottom">
@@ -152,10 +154,10 @@ export default class Modal extends React.Component {
                                 <p className="tab__textM">После подключения двухфакторной аутентификации мы будем запрашивать
                                     не только пароль, но и код для входа.</p>
 
-                                <div className="tab__sendM">
+                                {/* <div className="tab__sendM">
                                     <label className="tab__textM">Тел: </label>
                                     <input id="int__tel" type="text" className="tab__inputM" placeholder="8-800-555-35-35"></input>
-                                </div>
+                                </div> */}
 
                                 <div className="tab__bottom">
                                     <p className="tab__textM">Активировать двухфакторную аутентификацию </p>
