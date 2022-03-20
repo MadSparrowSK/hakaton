@@ -24,6 +24,7 @@ dynamicKeyRouter.post('/key',  async (req,res) => {
 
 dynamicKeyRouter.get('/key/:id', async (req,res) => {
     const {id} = req.params;
+    const { email } = req.query;
     if(!map.has(id)) {
         map.set(id, {
             "lastDate": Date.now(),
@@ -42,7 +43,7 @@ dynamicKeyRouter.get('/key/:id', async (req,res) => {
     if(Math.abs(map.get(id)['lastDate'] - currentDate) > 10000) {
         map.get(id)['lastDate'] = currentDate;
         map.get(id)['key'] = await randomstring.generate(4);
-        await OperationWithModels.reWriteCodeDynamic({ id,  code: map.get(id)['key']})
+        await OperationWithModels.reWriteCodeDynamic({ id, email,  code: map.get(id)['key']})
     }
     res.write(`data: ${map.get(id)['key']}\n\n`);
     res.end();
