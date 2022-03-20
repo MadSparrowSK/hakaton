@@ -156,9 +156,9 @@ module.exports = class OperationWithModels
         }
 
         if (user){
-            const userCode = await crudUserCode.findOne({s_user: {$eq: user._id.toString()}})
+            const userCode = await crudUserCode.findOne({s_user: {$eq: user._id.toString(), dynamic: {$eq: true}}})
             if (userCode) {
-                await crudUserCode.updateOne({s_user: {$eq: user._id.toString()}}, {code: code})
+                await crudUserCode.updateOne({s_user: {$eq: user._id.toString()}, dynamic: {$eq: true}}, {code: code})
                 return true
             } else {
                 await crudUserCode.createOne({s_user: user._id.toString(), code: code, dynamic: true})
