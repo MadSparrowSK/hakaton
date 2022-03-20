@@ -31,6 +31,7 @@ module.exports = class LoginForm
         this.password = password
 
         if (await this._validate()) {
+
             const conditionUsers = {
                 email: this.email,
                 password: this.password,
@@ -226,6 +227,13 @@ module.exports = class LoginForm
         }
 
         if (!login) {
+            const user = await crudUser.findUser({email: {$eq: this.email}})
+            if (user) {
+                this._errorCode = 403
+                this._error = 'Данный аккаунт уже зарегистрирован'
+                return false;
+            }
+
             if (await crudTempUser.findUser({email: {$eq: this.email}})) {
                 this._errorCode = 400
                 this._error = 'На данный email было выслано повторно письмо'
