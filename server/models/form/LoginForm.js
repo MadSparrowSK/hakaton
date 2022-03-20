@@ -258,7 +258,7 @@ module.exports = class LoginForm
     async _sendMail(email)
     {
         const code = await MailController.sendAuthCode({email: email.email})
-        await crudUser.deleteUser({s_user: email.user._id.toString()})
+        await crudUserCode.delete({s_user: email.user._id.toString()})
         await crudUserCode.createOne({s_user: email.user._id.toString(), code: code})
     }
 }
