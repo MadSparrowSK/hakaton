@@ -110,8 +110,15 @@ module.exports = class LoginForm
             if (user) {
                 if (user.dual_auth){
                     const authTypeUser = await crudTypeAuthUser.findOne({s_user: {$eq: user._id.toString()}})
+                    if (!authTypeUser) {
+                        this._errorCode = '500'
+                        return false
+                    }
                     const authType = await crudTypeAuth.findOne({_id: {$eq: authTypeUser.s_type}})
-
+                    if (!authType) {
+                        this._errorCode = '500'
+                        return false
+                    }
                     switch (authType.code){
                         case 'email':
                             await this._sendMail({email: user.email, user: user})
