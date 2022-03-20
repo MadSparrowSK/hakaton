@@ -65,12 +65,12 @@ module.exports = class OperationWithModels
     static async modalAuth(params)
     {
         const { email } = params
-        const user = crudUser.findUser({email: {$eq: email}})
+        const user = await crudUser.findUser({email: {$eq: email}})
 
         if (user) {
             if (user.dual_auth) {
-                const typeAuthUser = crudTypeAuthUser.findOne({s_user: user._id.toString()})
-                const typeAuth = crudTypeAuth.findById(typeAuthUser._id.toString())
+                const typeAuthUser = await crudTypeAuthUser.findOne({s_user: {$eq: user._id.toString()}})
+                const typeAuth = await crudTypeAuth.findById(typeAuthUser.s_type)
                 this._error = 'Двухфакторная защита уже подключена';
                 this._codeError = '200'
                 return {
@@ -145,8 +145,16 @@ module.exports = class OperationWithModels
 
     static async reWriteCodeDynamic(params)
     {
-        const {id, code} = params
-        const user = await crudUser.findUserById(id)
+        const {id, email, code} = params
+        let user = null;
+        if (id){
+            user = await crudUser.findUserById(id)
+        } else {
+            if (email){
+                user = await crudUser.findUser({email: {$eq: email}})
+            }
+        }
+
         if (user){
             const userCode = await crudUserCode.findOne({s_user: {$eq: id}})
             if (userCode) {
