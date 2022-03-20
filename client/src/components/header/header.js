@@ -34,6 +34,7 @@ export default class Header extends React.Component {
     }
 
     changeOpenModal = () => {
+
         this.setState({
             openModal: !this.props.openModal
         })
@@ -60,12 +61,12 @@ export default class Header extends React.Component {
                     <p className="header__text">DDOS-GUARD</p>
                 </div>
 
-                <nav className="header__nav">
+                {/* <nav className="header__nav">
                     <a href="#" className="header__link">Продукты и решения</a>
                     <a href="#" className="header__link">Информация</a>
                     <a href="#" className="header__link">База знаний</a>
                     <a href="#" className="header__link">Блог</a>
-                </nav>
+                </nav> */}
 
                 <div className="hedaer__client">
 

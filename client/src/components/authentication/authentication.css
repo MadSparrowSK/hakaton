@@ -91,6 +91,17 @@ border-radius: 0 20px 0 0;
 padding: 2% 5%;
 }
 
+#enterText {
+  margin: 0!important;
+
+  text-align: center;
+  width: 100%;
+}
+
+#btnEnterIn {
+  margin-bottom: 30px;
+}
+
 .react-tabs__tab--selected {
 color: rgba(5, 137, 229, 1);
 
@@ -104,7 +115,7 @@ transition: all .2s ease-in;
   width: 43%;
   margin-left: auto;
   margin-right: 5%;
-  
+
 }
 
 #tab__sendPass {
@@ -175,6 +186,15 @@ margin: 0;
 display: flex;
 justify-content: space-between;
 align-items: center;
+
+
+}
+
+#text__send {
+  margin: 0 !important;
+  padding: 0;
+  text-align: center;
+  width: 100%;
 }
 
 .tab__bottom--top {
@@ -198,6 +218,10 @@ width: 64px;
 
 
 
+}
+
+.hide {
+  display: none;
 }
 
 .label__input {
@@ -286,5 +310,17 @@ transition: all .5s ease-in-out;
 
   font-family: 'Montserrat', sans-serif;
   font-weight: 500;
+
+}
+
+
+.tab__twoFactorka {
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+
+  margin-top: 0;
 
 }

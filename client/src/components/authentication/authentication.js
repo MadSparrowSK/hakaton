@@ -1,6 +1,7 @@
 import React from "react";
 import "./authentication.css";
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
+import axios from "axios";
 
 
 
@@ -14,20 +15,24 @@ export default class Authentication extends React.Component {
     _pas = "123";
     state = {
         activeBtn: false,
-        displayMidal: true
+        textSend: null,
+        typeKey: null,
+        resData: null
     }
 
     componentDidMount = () => {
-
+        localStorage.removeItem('saveUser');
     }
 
     onActiveBtn = (e) => {
         e.preventDefault();
 
+        let sendEmail = document.querySelector('#tab__sendEmail').value;
+
         if (!this.state.activeBtn) {
-            localStorage.setItem('saveUser', true);
+            localStorage.setItem('email', sendEmail);
         } else {
-            localStorage.removeItem('saveUser');
+            localStorage.setItem('email', null);
         }
 
         this.setState({
@@ -36,7 +41,7 @@ export default class Authentication extends React.Component {
 
     }
 
-    checkUser = () => {
+    checkUser = async () => {
 
         let email = document.querySelector('#tab__sendEmail');
         let emailVal = email.value;
@@ -44,21 +49,53 @@ export default class Authentication extends React.Component {
         let pass = document.querySelector('#tab__sendPass');
         let passVal = pass.value;
 
-        if (pass !== this._pas) {
+        localStorage.setItem("email", emailVal);
 
-            pass.classList.add("errorInput");
 
-            setTimeout(() => {
-                pass.classList.remove("errorInput");
-            }, 1000, "Привет", "Джон");
+        try {
 
-        }
+            const res = await axios.post("http://localhost:5000/login", {
+                email: emailVal,
+                password: passVal
+            });
 
-        if (emailVal === this._email && passVal === this._pas) {
+            if (res.status === 201) {
 
-            this.props.setActive(false)
+                this.props.setActive(false);
 
-        } else {
+            } else if (res.status === 200) {
+
+                const data = await res.data.data;
+                const type = await data.type;
+
+                let enterIn = document.querySelector('#enterIn');
+                enterIn.classList.add("hide");
+
+                let twoFactorka = document.querySelector('#tab__twoFactorka');
+                twoFactorka.classList.remove("hide");
+
+                if (type === "email") {
+
+                    let temp = document.querySelector('.authentication__content');
+                    temp.style.backgroundImage = "url('../img-passIn.png)";
+
+                    this.setState({
+                        textSend: `Сообщение отправлено на ${localStorage.getItem("email")}`,
+                        typeKey: "email"
+                    })
+
+                } else if (type === "dynamic") {
+
+                    this.setState({
+                        textSend: `Сообщение отправлено на телефон`,
+                        typeKey: "dynamic"
+                    })
+
+                }
+
+            }
+
+        } catch {
 
         }
 
@@ -67,13 +104,14 @@ export default class Authentication extends React.Component {
     showForgotTab = (e) => {
         e.preventDefault();
 
+        let arr = document.querySelectorAll('.tab__panel');
+        arr.forEach(it => it.classList.add("hide"));
+
         let tabForgotPass = document.querySelector('#tab__forgotPass');
         let enterIn = document.querySelector('#enterIn');
 
         enterIn.classList.add("hide");
         tabForgotPass.classList.remove("hide");
-
-        console.log()
 
 
     }
@@ -89,11 +127,94 @@ export default class Authentication extends React.Component {
 
     }
 
+    sendRegistr = async (e) => {
+        e.preventDefault();
+
+        let emailC = document.querySelector('#tab__sendEmailRegistration').value;
+        let passC = document.querySelector('#tab__sendPassRegistration').value;
+
+        try {
+
+            const responce = await axios.post("http://localhost:5000/reg", {
+                email: emailC,
+                password: passC.toString()
+            });
+
+            const data = await responce.data;
+
+            //тут вывести инфу о запросе
+            this.setState({
+                resData: data
+            })
+
+            //дальше чёл подтверждает и потом входит в акк
+            //подтвердить
+
+        } catch {
+
+
+
+        }
+
+
+    }
+
+    //отправляем динамический код
+    sendDynamicCode = async () => {
+
+        let codeValue = document.querySelector('#inpt__Code').value;
+
+        //чтоыб он мог код вводить n-ое кол-во раз
+
+
+        if (this.state.typeKey === "email") {
+
+            try {
+
+                const resT = await axios.post("http://localhost:5000/login/verify", {
+                    email: localStorage.getItem("email"),
+                    code: codeValue.toString()
+                })
+
+                if (resT.status === 200) {
+                    this.props.setActive(false)
+                }
+
+            } catch {
+
+                alert("Введите код ещё раз")
+            }
+
+        } else if (this.state.typeKey === "dynamic") {
+
+            try {
+
+                const res = await axios.post("http://localhost:5000/hot-key/key", {
+                    email: localStorage.getItem("email"),
+                    code: codeValue
+                });
+
+                if (res.status === 200) {
+                    this.props.setActive(false);
+                }
+                // else {
+                //     //по новой вводит
+                // }
+
+
+
+            } catch {
+               alert("ощибка")
+            }
+
+        }
+    }
+
 
     render() {
 
         const { active } = this.props;
-        const { activeBtn } = this.state;
+        const { activeBtn, textSend, resData } = this.state;
 
         const activeBtnL = activeBtn === true ?
             "label label--on"
@@ -111,7 +232,7 @@ export default class Authentication extends React.Component {
                             <Tab className="tab">регистрация</Tab>
                         </TabList>
 
-                        {/*  id="enterIn" */}
+
                         <TabPanel className="tab__panel">
 
                             <form id="enterIn" className="form">
@@ -128,7 +249,7 @@ export default class Authentication extends React.Component {
 
                                     <div className="tab__bottom--top">
                                         <label onClick={this.onActiveBtn} className={activeBtnL}>
-                                            <input type="checkbox" className="label__input"/>
+                                            <input type="checkbox" className="label__input" />
 
                                             <div className="label__circle"></div>
                                         </label>
@@ -141,6 +262,8 @@ export default class Authentication extends React.Component {
                                 </div>
 
                                 <button type="button" onClick={this.checkUser} id="btnEnterIn" className="btnEnter">Войти</button>
+
+                                <p id="enterText" className="tab__text">{resData}</p>
 
                             </form>
 
@@ -163,31 +286,34 @@ export default class Authentication extends React.Component {
                                     <input id="tab__sendPassRegistration2" type="password" className="tab__input" placeholder="Повторите пароль"></input>
                                 </div>
 
-                                <button id="btnEnterRegistration" className="btnEnter">Зарегистрироваться</button>
+                                <button id="btnEnterRegistration" className="btnEnter" onClick={this.sendRegistr}>Зарегистрироваться</button>
 
                             </form>
 
                         </TabPanel>
 
+
                         <div id="tab__twoFactorka" className="tab__panel hide">
 
-                            <form className="form">
+                            <form className="form tab__twoFactorka">
 
-                                <p>Пройдите двуфакторную аутентификацию</p>
+                                <p className="tab__text">Пройдите двуфакторную аутентификацию</p>
 
-                                <img className="img__mail" src="../" alt="img" />
+                                <p className="tab__text">{textSend}</p>
 
-                                <p>Введите код подтверждения</p>
+                                <img className="img__mail" src="https://www.shareicon.net/data/128x128/2016/07/19/798338_security_512x512.png" alt="img" />
+
+                                <p className="tab__text">Введите код подтверждения</p>
 
                                 <div className="input__code">
-                                    <input className="number_input" type="number" />
+                                    <input id="inpt__Code" className="tab__input" type="text" />
                                 </div>
+
+                                <button type="button" id="enterCode" className="btnEnter" onClick={this.sendDynamicCode}>Ввести</button>
 
                             </form>
 
                         </div>
-
-
 
 
                         <div id="tab__forgotPass" className="tab__panel hide">
