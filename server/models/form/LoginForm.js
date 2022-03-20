@@ -63,7 +63,8 @@ module.exports = class LoginForm
             }
 
             this._verification = activate.verification
-            this._errorCode = 'Отправлено письмо'
+            this._errorCode = 200
+            this._error = 'Отправлено письмо'
             return true
         }
         if (this._duplicateEmail) {
