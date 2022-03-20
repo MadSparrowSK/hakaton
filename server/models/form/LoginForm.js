@@ -153,7 +153,7 @@ module.exports = class LoginForm
         const { email, code } = params
         const user = await crudUser.findUser({email: {$eq: email}})
         if (user) {
-            const userCode = await crudUserCode.findOne({s_user: user._id.toString(), dynamic: {$eq: true}})
+            const userCode = await crudUserCode.findOne({s_user: user._id.toString(), dynamic: false})
             if (userCode.code === code) {
                 await crudUserCode.delete({s_user: {$eq: user._id.toString()}, dynamic: false})
                 this._error = 'Успешно введен код';
